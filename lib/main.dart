@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/views/accommodation/index.dart';
 import 'package:pet_app/views/index.dart';
-import 'package:pet_app/widgets/layout/layout_app.dart';
+import 'package:pet_app/widgets/layout/layout_default.dart';
 
 void main() {
   runApp(
@@ -9,7 +9,7 @@ void main() {
       title: 'Named Routes Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => LayoutApp(),
+        '/': (context) => Home(),
         '/accommodation': (context) => AccommodationIndex(),
       },
     ),
