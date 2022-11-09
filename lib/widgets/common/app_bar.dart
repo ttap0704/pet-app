@@ -13,12 +13,12 @@ class BackButton extends StatelessWidget {
 }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar(
-      {Key? key,
-      required this.appBar,
-      required this.title,
-      required this.useBackButton})
-      : super(key: key);
+  const CustomAppBar({
+    Key? key,
+    required this.appBar,
+    required this.title,
+    required this.useBackButton,
+  }) : super(key: key);
 
   final AppBar appBar;
   final String title;

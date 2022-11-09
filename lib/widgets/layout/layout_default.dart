@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:pet_app/widgets/common/app_bar.dart';
-import 'package:pet_app/widgets/common/bottom_nav.dart';
+import 'package:pet_app/widgets/common/bottom_nav2.dart';
 
 class LayoutDefault extends StatelessWidget {
   const LayoutDefault(

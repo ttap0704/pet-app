@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../store/common.dart';
+import 'package:pet_app/store/common.dart';
 
-class CustomBottomNavigation extends ConsumerWidget {
-  const CustomBottomNavigation({super.key});
+class CustomBottomNavigation extends ConsumerStatefulWidget {
+  const CustomBottomNavigation({Key? key}) : super(key: key);
 
+  @override
+  CustomBottomNavigationState createState() => CustomBottomNavigationState();
+}
+
+class CustomBottomNavigationState
+    extends ConsumerState<CustomBottomNavigation> {
   final List<Map> _navigationItems = const [
     {'icon': Icon(Icons.start)},
     {'icon': Icon(Icons.start)}
@@ -20,13 +26,20 @@ class CustomBottomNavigation extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final commonRead = ref.read(commonStateNotifierProvider.notifier);
-    final commonState = ref.watch(commonStateNotifierProvider);
+  void initState() {
+    super.initState();
 
+    // ref.listen(commonStateNotifierProvider, (previous, next) {
+    //   print('$previous, $next');
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BottomNavigationBar(
       onTap: (int tab) {
-        commonRead.setTabNumber(tab);
+        ref.read(commonStateNotifierProvider.notifier).setTabNumber(tab);
+        // print(commonWatch.tabNumber);
       },
       items: <BottomNavigationBarItem>[
         ..._navigationItems.map((entry) {
