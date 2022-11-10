@@ -1,41 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../store/common.dart';
+import 'package:pet_app/store/common.dart';
 
-class CustomBottomNavigation extends ConsumerWidget {
-  const CustomBottomNavigation({super.key});
+class CustomBottomNavigation extends ConsumerStatefulWidget {
+  const CustomBottomNavigation({Key? key}) : super(key: key);
 
+  @override
+  CustomBottomNavigationState createState() => CustomBottomNavigationState();
+}
+
+class CustomBottomNavigationState
+    extends ConsumerState<CustomBottomNavigation> {
   final List<Map> _navigationItems = const [
-    {'icon': Icon(Icons.start)},
-    {'icon': Icon(Icons.start)}
+    {'icon': Icons.start},
+    {'icon': Icons.start},
+    {'icon': Icons.start},
+    {'icon': Icons.start},
+    {'icon': Icons.start},
   ];
 
   Color setIconColor(int idx) {
-    return Colors.black;
-    // if (commonState.tabNumber == idx) {
-    //   return Colors.red;
-    // } else {
-    //   return Colors.black;
-    // }
+    final commonWatch = ref.watch(commonProvider);
+    if (commonWatch.tabNumber == idx) {
+      return Colors.red;
+    } else {
+      return Colors.black;
+    }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final commonRead = ref.read(commonStateNotifierProvider.notifier);
-    final commonState = ref.watch(commonStateNotifierProvider);
+  void initState() {
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final commonRead = ref.read(commonProvider.notifier);
+    final commonWatch = ref.watch(commonProvider);
     return BottomNavigationBar(
       onTap: (int tab) {
         commonRead.setTabNumber(tab);
+        print(commonWatch.tabNumber);
       },
       items: <BottomNavigationBarItem>[
         ..._navigationItems.map((entry) {
-          return BottomNavigationBarItem(icon: entry['icon'], label: '');
+          return BottomNavigationBarItem(
+            icon: Icon(entry['icon']),
+            label: '',
+          );
         }).toList()
       ],
-      currentIndex: 0,
-      showUnselectedLabels: false,
+      currentIndex: commonWatch.tabNumber,
+      unselectedItemColor: Colors.black26,
+      selectedItemColor: Colors.red,
       showSelectedLabels: false,
+      showUnselectedLabels: false,
+      type: BottomNavigationBarType.fixed,
     );
   }
 }
