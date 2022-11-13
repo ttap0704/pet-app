@@ -27,22 +27,22 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
     {
       'widget': AccommodationIndex(),
       'title': 'home2',
-      'useBackButton': false,
+      'useBackButton': true,
     },
     {
       'widget': Home(),
       'title': 'home3',
-      'useBackButton': false,
+      'useBackButton': true,
     },
     {
       'widget': Home(),
       'title': 'home4',
-      'useBackButton': false,
+      'useBackButton': true,
     },
     {
       'widget': Home(),
       'title': 'home5',
-      'useBackButton': false,
+      'useBackButton': true,
     },
   ];
 
