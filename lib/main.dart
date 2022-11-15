@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_app/views/accommodation/index.dart';
-import 'package:pet_app/views/index.dart';
+import 'package:pet_app/store/size.dart';
 import 'package:pet_app/widgets/layout/layout_default.dart';
 
 void main() {
@@ -14,10 +13,26 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends ConsumerStatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final sizeRead = ref.read(sizeProvider.notifier);
+      final width = MediaQuery.of(context).size.width;
+      final height = MediaQuery.of(context).size.height;
+      sizeRead.setInitSize(width, height);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return const LayoutDefault();
