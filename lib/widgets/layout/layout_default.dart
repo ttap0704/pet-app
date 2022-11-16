@@ -1,7 +1,5 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/store/common.dart';
 import 'package:pet_app/views/accommodation/index.dart';
 import 'package:pet_app/views/daily/index.dart';
@@ -10,6 +8,7 @@ import 'package:pet_app/views/restaurant/index.dart';
 import 'package:pet_app/views/user/user.dart';
 import 'package:pet_app/widgets/common/app_bar.dart';
 import 'package:pet_app/widgets/common/bottom_nav.dart';
+import 'package:pet_app/styles.dart';
 
 class LayoutDefault extends ConsumerStatefulWidget {
   const LayoutDefault({
@@ -55,16 +54,40 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final commonWatch = ref.watch(commonProvider);
 
+    final width = MediaQuery.of(context).size.width;
+
+    if (width <= 600) {
+      defaultSize = 12;
+    } else if (width > 600 && width <= 768) {
+      defaultSize = 13;
+    } else if (width > 768 && width <= 992) {
+      defaultSize = 14;
+    } else if (width > 992 && width <= 1200) {
+      defaultSize = 15;
+    } else {
+      defaultSize = 16;
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
-        appBar: AppBar(),
         title: _defaultList[commonWatch.tabNumber]['title'],
         useBackButton: _defaultList[commonWatch.tabNumber]['useBackButton'],
       ),
-      body: _defaultList[commonWatch.tabNumber]['widget'],
+      body: Container(
+        // padding: EdgeInsets.symmetric(
+        //   vertical: multiply14(defaultSize),
+        //   horizontal: multiply12(defaultSize),
+        // ),
+        child: _defaultList[commonWatch.tabNumber]['widget'],
+      ),
       bottomNavigationBar: const CustomBottomNavigation(),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/store/common.dart';
-import 'package:pet_app/store/size.dart';
 import 'package:pet_app/util/colors.dart';
 
 class CustomBottomNavigation extends ConsumerStatefulWidget {
@@ -14,11 +13,11 @@ class CustomBottomNavigation extends ConsumerStatefulWidget {
 class CustomBottomNavigationState
     extends ConsumerState<CustomBottomNavigation> {
   final List<Map> _navigationItems = const [
-    {'icon': Icons.start},
-    {'icon': Icons.start},
-    {'icon': Icons.start},
-    {'icon': Icons.start},
-    {'icon': Icons.start},
+    {'icon': Icons.house},
+    {'icon': Icons.bed},
+    {'icon': Icons.restaurant},
+    {'icon': Icons.message},
+    {'icon': Icons.menu},
   ];
 
   @override
@@ -30,11 +29,9 @@ class CustomBottomNavigationState
   Widget build(BuildContext context) {
     final commonRead = ref.read(commonProvider.notifier);
     final commonWatch = ref.watch(commonProvider);
-    final sizeWatch = ref.watch(sizeProvider);
     return BottomNavigationBar(
       onTap: (int tab) {
         commonRead.setTabNumber(tab);
-        print('${sizeWatch.width}, ${sizeWatch.height}');
       },
       items: <BottomNavigationBarItem>[
         ..._navigationItems.map((entry) {

@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pet_app/styles.dart';
 import 'package:pet_app/store/common.dart';
-import 'package:pet_app/store/size.dart';
-import 'package:pet_app/store/styles.dart';
 import 'package:pet_app/util/colors.dart';
 
 class CustomAppBar extends ConsumerStatefulWidget with PreferredSizeWidget {
-  const CustomAppBar(
-      {Key? key,
-      required this.appBar,
-      required this.title,
-      required this.useBackButton,
-      e})
-      : preferredSize = const Size.fromHeight(50.0),
+  const CustomAppBar({
+    Key? key,
+    required this.title,
+    required this.useBackButton,
+  })  : preferredSize = const Size.fromHeight(60.0),
         super(key: key);
 
   @override
   final Size preferredSize;
-  final AppBar appBar;
   final String title;
   final bool useBackButton;
 
@@ -29,8 +25,6 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     final commonWatch = ref.watch(commonProvider);
-    final sizeWatch = ref.watch(sizeProvider);
-    final styles = Styles(sizeWatch.width, sizeWatch.height);
 
     final bool isHome = commonWatch.tabNumber == 0 ? true : false;
     final Color homeTitleColor = isHome ? Colors.white : Colors.black;
@@ -40,7 +34,11 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
       centerTitle: true,
       title: Text(
         widget.title,
-        style: styles.textTextStyle,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: multiply20(defaultSize),
+          fontWeight: FontWeight.w700,
+        ),
       ),
       backgroundColor: isHome ? CustomColors.orange : Colors.white,
       bottomOpacity: 1,
