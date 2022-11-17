@@ -82,10 +82,6 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
         useBackButton: _defaultList[commonWatch.tabNumber]['useBackButton'],
       ),
       body: Container(
-        // padding: EdgeInsets.symmetric(
-        //   vertical: multiply14(defaultSize),
-        //   horizontal: multiply12(defaultSize),
-        // ),
         child: _defaultList[commonWatch.tabNumber]['widget'],
       ),
       bottomNavigationBar: const CustomBottomNavigation(),

@@ -8,9 +8,18 @@ class CustomTabs extends ConsumerStatefulWidget {
   CustomTabsState createState() => CustomTabsState();
 }
 
-class CustomTabsState extends ConsumerState<CustomTabs> {
+class CustomTabsState extends ConsumerState<CustomTabs>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 5, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(child: Text('CustomTabs'));
+    return Text('asd');
   }
 }

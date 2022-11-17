@@ -42,7 +42,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
       ),
       backgroundColor: isHome ? CustomColors.orange : Colors.white,
       bottomOpacity: 1,
-      elevation: 0.5,
+      elevation: 0,
       shadowColor: Colors.black,
     );
   }
