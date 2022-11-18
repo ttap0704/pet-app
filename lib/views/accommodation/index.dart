@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pet_app/classes/mungroad_accommodation.dart';
+import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/http.dart';
+import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/widgets/layout/layout_button_bar.dart';
+import 'package:pet_app/widgets/list/list_product.dart';
 
 class AccommodationIndex extends ConsumerStatefulWidget {
   const AccommodationIndex({Key? key}) : super(key: key);
@@ -12,6 +16,8 @@ class AccommodationIndex extends ConsumerStatefulWidget {
 
 class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
   String _currentTypes = '';
+
+  List<MungroadProduct> _productList = [];
 
   @override
   void initState() {
@@ -34,8 +40,14 @@ class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
   }
 
   void getContents() async {
-    final result = await HttpApi.getApi('/accommodation?types=1,2,3,4&page=1');
-    print(result);
+    final result = await HttpApi.getApi('/accommodation?types=1,2,3,4&page=1')
+        as List<dynamic>;
+    List<MungroadProduct> tmpPoductList =
+        await MungroadTools.makeProduct(result, 2);
+    ;
+    setState(() {
+      _productList = [...tmpPoductList];
+    });
   }
 
   @override
@@ -43,7 +55,9 @@ class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
     return LayoutButtonBar(
       buttonBarContents: const ['전체', '펜션', '호텔/리조트', '캠핑/글램핑', '기타'],
       onClickButton: handleButtonBar,
-      child: const Text('AccommodationIndex'),
+      child: ListProduct(
+        productList: _productList,
+      ),
     );
   }
 }

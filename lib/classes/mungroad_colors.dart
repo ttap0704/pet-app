@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-class CustomColors {
+class MungroadColors {
   static const Color orange = Color(0xFFFF5349);
 }

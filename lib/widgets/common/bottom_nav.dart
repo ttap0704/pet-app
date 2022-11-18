@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/store/common.dart';
-import 'package:pet_app/util/colors.dart';
+import 'package:pet_app/classes/mungroad_colors.dart';
 
 class CustomBottomNavigation extends ConsumerStatefulWidget {
   const CustomBottomNavigation({Key? key}) : super(key: key);
@@ -43,7 +43,7 @@ class CustomBottomNavigationState
       ],
       currentIndex: commonWatch.tabNumber,
       unselectedItemColor: Colors.black26,
-      selectedItemColor: CustomColors.orange,
+      selectedItemColor: MungroadColors.orange,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,

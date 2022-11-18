@@ -19,3 +19,5 @@ double multiply04(int size) => size * 0.4;
 double multiply03(int size) => size * 0.3;
 double multiply02(int size) => size * 0.2;
 double multiply01(int size) => size * 0.1;
+
+double multiplyFree(int size, double multiValue) => size * multiValue;

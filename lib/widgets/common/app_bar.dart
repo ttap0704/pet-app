@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/store/common.dart';
-import 'package:pet_app/util/colors.dart';
+import 'package:pet_app/classes/mungroad_colors.dart';
 
 class CustomAppBar extends ConsumerStatefulWidget with PreferredSizeWidget {
   const CustomAppBar({
@@ -40,7 +40,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
           fontWeight: FontWeight.w700,
         ),
       ),
-      backgroundColor: isHome ? CustomColors.orange : Colors.white,
+      backgroundColor: isHome ? MungroadColors.orange : Colors.white,
       bottomOpacity: 1,
       elevation: 0,
       shadowColor: Colors.black,

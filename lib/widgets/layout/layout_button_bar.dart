@@ -3,8 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/styles.dart';
-import 'package:pet_app/util/colors.dart';
-import 'package:pet_app/widgets/tabs/custom_tabs.dart';
+import 'package:pet_app/classes/mungroad_colors.dart';
 
 class LayoutButtonBar extends ConsumerStatefulWidget {
   const LayoutButtonBar({
@@ -53,6 +52,7 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
               ),
             ),
             child: ButtonBar(
+              buttonHeight: multiply20(defaultSize),
               buttonPadding: EdgeInsets.symmetric(
                 vertical: multiply09(defaultSize),
                 horizontal: multiply02(defaultSize),
@@ -69,13 +69,13 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
                       widget.onClickButton(idx);
                     },
                     style: TextButton.styleFrom(
-                      foregroundColor: CustomColors.orange,
+                      foregroundColor: MungroadColors.orange,
                     ),
                     child: Text(
                       entry,
                       style: TextStyle(
                         color: _selectedButtonIndex == idx
-                            ? CustomColors.orange
+                            ? MungroadColors.orange
                             : Colors.black,
                       ),
                     ),
@@ -86,6 +86,7 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             child: Container(
               padding: EdgeInsets.symmetric(
                 vertical: multiply14(defaultSize),
