@@ -39,6 +39,7 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
         children: <Widget>[
           Container(
             width: double.infinity,
+            height: 40,
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -86,7 +87,7 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height - 160,
             child: Container(
               padding: EdgeInsets.symmetric(
                 vertical: multiply14(defaultSize),

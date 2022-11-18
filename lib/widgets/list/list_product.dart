@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
+import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 
 class ListProduct extends ConsumerStatefulWidget {
@@ -23,7 +24,18 @@ class ListProductState extends ConsumerState<ListProduct> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int idx) {
-              return PreviewContainer(child: Text('hihi'), fileName: '');
+              MungroadProduct currentProduct = widget.productList[idx];
+              int targetPath = ((currentProduct.id / 50).floor() * 50);
+              print(targetPath);
+              String? typeEng = mungroadTypeEng[currentProduct.type];
+
+              String imagePath =
+                  '$imageServerName/image/$typeEng/$targetPath/${currentProduct.id}/${currentProduct.images[0].fileName}';
+
+              return PreviewContainer(
+                fileName: imagePath,
+                child: const Text('hihi'),
+              );
             },
             childCount: widget.productList.length,
           ),
@@ -46,6 +58,7 @@ class PreviewContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(fileName);
     return Container(
       width: 100,
       height: multiplyFree(defaultSize, 20),
@@ -54,10 +67,10 @@ class PreviewContainer extends StatelessWidget {
           width: 0.1,
           color: Colors.black,
         ),
-        // image: const DecorationImage(
-        //   fit: BoxFit.cover,
-        //   image: fileName.isNotEmpty ? NetworkImage(fileName) : ,
-        // ),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(fileName),
+        ),
       ),
       child: child,
     );
