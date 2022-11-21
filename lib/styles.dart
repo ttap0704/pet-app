@@ -1,3 +1,6 @@
+import 'package:pet_app/classes/mungroad_image_size.dart';
+
+// multifly Start
 int defaultSize = 0;
 
 double multiply20(int size) => size * 2.0;
@@ -21,3 +24,14 @@ double multiply02(int size) => size * 0.2;
 double multiply01(int size) => size * 0.1;
 
 double multiplyFree(int size, double multiValue) => size * multiValue;
+// multifly End
+
+// imageSize Start
+MungroadImageSize imageSize = MungroadImageSize(0);
+void setImageSize(double width) {
+  MungroadImageSize tmpImageSize = MungroadImageSize(width);
+  tmpImageSize.init();
+
+  imageSize = tmpImageSize;
+}
+// imageSize End

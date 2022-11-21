@@ -61,9 +61,9 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
   @override
   Widget build(BuildContext context) {
     final commonWatch = ref.watch(commonProvider);
-
     final width = MediaQuery.of(context).size.width;
 
+    setImageSize(width);
     if (width <= 600) {
       defaultSize = 12;
     } else if (width > 600 && width <= 768) {

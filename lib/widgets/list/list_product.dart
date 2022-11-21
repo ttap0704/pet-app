@@ -19,22 +19,15 @@ class ListProduct extends ConsumerStatefulWidget {
 class ListProductState extends ConsumerState<ListProduct> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return CustomScrollView(
       slivers: <Widget>[
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int idx) {
-              MungroadProduct currentProduct = widget.productList[idx];
-              int targetPath = ((currentProduct.id / 50).floor() * 50);
-              print(targetPath);
-              String? typeEng = mungroadTypeEng[currentProduct.type];
-
-              String imagePath =
-                  '$imageServerName/image/$typeEng/$targetPath/${currentProduct.id}/${currentProduct.images[0].fileName}';
-
               return PreviewContainer(
-                fileName: imagePath,
-                child: const Text('hihi'),
+                product: widget.productList[idx],
               );
             },
             childCount: widget.productList.length,
@@ -47,32 +40,77 @@ class ListProductState extends ConsumerState<ListProduct> {
 }
 
 class PreviewContainer extends StatelessWidget {
-  const PreviewContainer({
-    Key? key,
-    required this.child,
-    required this.fileName,
-  }) : super(key: key);
+  const PreviewContainer({Key? key, required this.product}) : super(key: key);
 
-  final Widget child;
-  final String fileName;
+  final MungroadProduct product;
 
   @override
   Widget build(BuildContext context) {
-    print(fileName);
+    MungroadProduct currentProduct = product;
+    // image file name
+    int targetPath = ((currentProduct.id / 50).floor() * 50);
+    String? typeEng = mungroadTypeEng[currentProduct.type];
+    List<String> splitedFileName = currentProduct.images[0].fileName.split('.');
+    String finalFileName =
+        '${splitedFileName[0]}_${imageSize.accommodationSize}.jpg';
+
+    String imagePath =
+        '$imageServerName/resize-image/$typeEng/$targetPath/${currentProduct.id}/$finalFileName';
+
+    // label, address
+    String label = currentProduct.label;
+    String address =
+        '${currentProduct.sido} ${currentProduct.sigungu} ${currentProduct.bname}';
+
     return Container(
       width: 100,
       height: multiplyFree(defaultSize, 20),
       decoration: BoxDecoration(
+        borderRadius:
+            BorderRadius.all(Radius.circular(multiply05(defaultSize))),
         border: Border.all(
           width: 0.1,
           color: Colors.black,
         ),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(fileName),
+          image: NetworkImage(imagePath),
         ),
       ),
-      child: child,
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(0, 0, 0, 0),
+              Color.fromARGB(75, 0, 0, 0),
+            ],
+          ),
+        ),
+        padding: EdgeInsets.all(multiply15(defaultSize)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: multiply16(defaultSize),
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              address,
+              style: TextStyle(
+                fontSize: multiply11(defaultSize),
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

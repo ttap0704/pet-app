@@ -77,7 +77,7 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
                       style: TextStyle(
                         color: _selectedButtonIndex == idx
                             ? MungroadColors.orange
-                            : Colors.black,
+                            : Colors.black54,
                       ),
                     ),
                   );
