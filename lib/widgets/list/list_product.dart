@@ -1,40 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/util/mungroad_scroll_controller.dart';
 
 class ListProduct extends ConsumerStatefulWidget {
   const ListProduct({
     Key? key,
+    required this.productType,
     required this.productList,
+    required this.baseUrl,
   }) : super(key: key);
 
+  final int productType;
   final List<MungroadProduct> productList;
+  final String baseUrl;
 
   @override
   ListProductState createState() => ListProductState();
 }
 
 class ListProductState extends ConsumerState<ListProduct> {
+  late MungroadScrollController _listScrollController;
+  List<MungroadProduct> _currentProductList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _currentProductList = widget.productList;
+      _listScrollController = MungroadScrollController(
+        widget.productType,
+        widget.baseUrl,
+        2,
+        MungroadListOptions('', ''),
+      );
+
+      print(widget.productList);
+    });
+
+    _listScrollController.addListener(() {
+      getList();
+      print('${_listScrollController.offset}');
+    });
+  }
+
+  void getList() async {
+    List<MungroadProduct> result = await _listScrollController.getList();
+    setState(() {
+      _currentProductList = [..._currentProductList, ...result];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int idx) {
-              return PreviewContainer(
-                product: widget.productList[idx],
-              );
-            },
-            childCount: widget.productList.length,
-          ),
-        )
-      ],
-      controller: ScrollController(),
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int idx) {
+        return PreviewContainer(
+          product: _currentProductList[idx],
+        );
+      },
+      itemCount: _currentProductList.length,
+      controller: _listScrollController,
     );
   }
 }
@@ -63,14 +95,11 @@ class PreviewContainer extends StatelessWidget {
         '${currentProduct.sido} ${currentProduct.sigungu} ${currentProduct.bname}';
 
     return Container(
-      width: 100,
-      height: multiplyFree(defaultSize, 20),
+      height: multiplyFree(defaultSize, 24),
+      margin: EdgeInsets.only(bottom: multiply09(defaultSize)),
       decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.all(Radius.circular(multiply05(defaultSize))),
-        border: Border.all(
-          width: 0.1,
-          color: Colors.black,
+        borderRadius: BorderRadius.all(
+          Radius.circular(multiply05(defaultSize)),
         ),
         image: DecorationImage(
           fit: BoxFit.cover,

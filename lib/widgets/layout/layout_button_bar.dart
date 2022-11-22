@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
 
@@ -36,8 +37,11 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
       width: double.infinity,
       height: double.infinity,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
+            alignment: Alignment.center,
             width: double.infinity,
             height: 40,
             decoration: const BoxDecoration(
