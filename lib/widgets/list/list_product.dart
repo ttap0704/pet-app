@@ -10,13 +10,13 @@ class ListProduct extends ConsumerStatefulWidget {
   const ListProduct({
     Key? key,
     required this.productType,
-    required this.productList,
     required this.baseUrl,
+    required this.options,
   }) : super(key: key);
 
   final int productType;
-  final List<MungroadProduct> productList;
   final String baseUrl;
+  final MungroadListOptions options;
 
   @override
   ListProductState createState() => ListProductState();
@@ -27,31 +27,48 @@ class ListProductState extends ConsumerState<ListProduct> {
   List<MungroadProduct> _currentProductList = [];
 
   @override
+  void didUpdateWidget(covariant ListProduct oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+
+    _listScrollController.setOptions(widget.options);
+    getList(true);
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
-      _currentProductList = widget.productList;
       _listScrollController = MungroadScrollController(
         widget.productType,
         widget.baseUrl,
         2,
-        MungroadListOptions('', ''),
+        widget.options,
       );
-
-      print(widget.productList);
     });
 
+    getList(true);
     _listScrollController.addListener(() {
-      getList();
-      print('${_listScrollController.offset}');
+      final maxScroll = _listScrollController.position.maxScrollExtent;
+      final currentScroll = _listScrollController.position.pixels;
+      if (maxScroll == currentScroll && _listScrollController.hasmore) {
+        getList(false);
+      }
     });
   }
 
-  void getList() async {
+  void getList(bool refresh) async {
     List<MungroadProduct> result = await _listScrollController.getList();
     setState(() {
-      _currentProductList = [..._currentProductList, ...result];
+      if (refresh == false) {
+        _currentProductList = [..._currentProductList, ...result];
+      } else {
+        _currentProductList = [...result];
+        if (result.isNotEmpty && _listScrollController.hasClients) {
+          _listScrollController.jumpTo(0);
+        }
+      }
     });
   }
 
@@ -59,29 +76,55 @@ class ListProductState extends ConsumerState<ListProduct> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int idx) {
-        return PreviewContainer(
-          product: _currentProductList[idx],
-        );
-      },
-      itemCount: _currentProductList.length,
-      controller: _listScrollController,
-    );
+    if (_currentProductList.isNotEmpty) {
+      return ListView.builder(
+        itemBuilder: (BuildContext context, int idx) {
+          return PreviewContainer(
+            product: _currentProductList[idx],
+            category: widget.productType,
+          );
+        },
+        itemCount: _currentProductList.length,
+        controller: _listScrollController,
+      );
+    } else {
+      return Container(
+        constraints: BoxConstraints(
+          maxHeight: multiplyFree(defaultSize, 20),
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          children: <Widget>[
+            Text(
+              '등록된 장소가 없습니다.',
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: multiplyFree(defaultSize, 1),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 
 class PreviewContainer extends StatelessWidget {
-  const PreviewContainer({Key? key, required this.product}) : super(key: key);
+  const PreviewContainer({
+    Key? key,
+    required this.product,
+    required this.category,
+  }) : super(key: key);
 
   final MungroadProduct product;
+  final int category;
 
   @override
   Widget build(BuildContext context) {
     MungroadProduct currentProduct = product;
     // image file name
     int targetPath = ((currentProduct.id / 50).floor() * 50);
-    String? typeEng = mungroadTypeEng[currentProduct.type];
+    String? typeEng = mungroadTypeEng[category];
     List<String> splitedFileName = currentProduct.images[0].fileName.split('.');
     String finalFileName =
         '${splitedFileName[0]}_${imageSize.accommodationSize}.jpg';
@@ -94,8 +137,18 @@ class PreviewContainer extends StatelessWidget {
     String address =
         '${currentProduct.sido} ${currentProduct.sigungu} ${currentProduct.bname}';
 
+    final width = MediaQuery.of(context).size.width;
+    double multiplyValue = 23;
+    if (width < 500 && width >= 400) {
+      multiplyValue = 18;
+    } else if (width < 400 && width >= 300) {
+      multiplyValue = 16;
+    } else if (width < 300) {
+      multiplyValue = 13;
+    }
+
     return Container(
-      height: multiplyFree(defaultSize, 24),
+      height: multiplyFree(defaultSize, multiplyValue),
       margin: EdgeInsets.only(bottom: multiply09(defaultSize)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(

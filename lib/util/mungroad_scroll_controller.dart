@@ -7,8 +7,9 @@ import 'package:pet_app/util/mungroad_tools.dart';
 class MungroadListOptions {
   String? recent;
   String? location;
+  String? types;
 
-  MungroadListOptions(this.recent, this.location);
+  MungroadListOptions(this.recent, this.location, this.types);
 }
 
 class MungroadScrollController extends ScrollController {
@@ -16,22 +17,41 @@ class MungroadScrollController extends ScrollController {
   String defaultUrl;
   int take;
   MungroadListOptions? options;
-  late int page = 1;
+  late int page = 0;
+  late bool hasmore = true;
 
   Future<List<MungroadProduct>> getList() async {
-    String currentUrl = '$defaultUrl?page=${page + 1}&types=1,2,3,4';
+    page = page + 1;
+    String currentUrl = '$defaultUrl?page=$page';
 
     if (options is MungroadListOptions) {
       if (options?.recent is String) {
         currentUrl = '$currentUrl&recent=${options?.recent}';
       }
+
+      if (options?.location is String) {
+        currentUrl = '$currentUrl&location=${options?.location}';
+      }
+
+      if (options?.types is String) {
+        currentUrl = '$currentUrl&types=${options?.types}';
+      }
     }
 
-    final result = HttpApi.getApi(currentUrl);
-    List<MungroadProduct> tmpPoductList =
+    final result = await HttpApi.getApi(currentUrl);
+    List<MungroadProduct> currentList =
         await MungroadTools.makeProduct(result, productType);
 
-    return tmpPoductList;
+    if (currentList.length < take) {
+      hasmore = false;
+    }
+
+    return currentList;
+  }
+
+  void setOptions(MungroadListOptions currentOptions) {
+    options = currentOptions;
+    page = 0;
   }
 
   MungroadScrollController(

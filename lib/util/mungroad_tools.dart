@@ -1,12 +1,13 @@
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
+import 'package:pet_app/constant.dart';
 
 class MungroadTools {
   static Future<List<MungroadProduct>> makeProduct(
       List<dynamic> result, int type) async {
     List<MungroadProduct> finalResult = [];
 
-    String imageKey = type == 2 ? 'accommodation_images' : 'resutaurant_images';
+    String imageKey = '${mungroadTypeEng[type]}_images';
 
     if (result.isNotEmpty) {
       for (int i = 0, leng = result.length; i < leng; i++) {

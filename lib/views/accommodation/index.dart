@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pet_app/classes/mungroad_accommodation.dart';
-import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/constant.dart';
-import 'package:pet_app/http.dart';
-import 'package:pet_app/store/image_style.dart';
-import 'package:pet_app/util/mungroad_tools.dart';
+import 'package:pet_app/util/mungroad_scroll_controller.dart';
 import 'package:pet_app/widgets/layout/layout_button_bar.dart';
 import 'package:pet_app/widgets/list/list_product.dart';
 
@@ -17,17 +13,9 @@ class AccommodationIndex extends ConsumerStatefulWidget {
 }
 
 class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
-  String _currentTypes = '';
+  MungroadListOptions _options = MungroadListOptions('', '', '1,2,3,4');
 
-  List<MungroadProduct> _productList = [];
   String listBaseUrl = '/${mungroadTypeEng[accommodationTypeNumber]}';
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getContents();
-  }
 
   void handleButtonBar(int idx) {
     String types;
@@ -38,18 +26,7 @@ class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
     }
 
     setState(() {
-      _currentTypes = types;
-    });
-  }
-
-  void getContents() async {
-    final result = await HttpApi.getApi('/accommodation?types=1,2,3,4&page=1')
-        as List<dynamic>;
-    List<MungroadProduct> tmpPoductList =
-        await MungroadTools.makeProduct(result, accommodationTypeNumber);
-
-    setState(() {
-      _productList = [...tmpPoductList];
+      _options = MungroadListOptions(_options.recent, _options.location, types);
     });
   }
 
@@ -60,8 +37,8 @@ class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
       onClickButton: handleButtonBar,
       child: ListProduct(
         productType: accommodationTypeNumber,
-        productList: _productList,
         baseUrl: listBaseUrl,
+        options: _options,
       ),
     );
   }
