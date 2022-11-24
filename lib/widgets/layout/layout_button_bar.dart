@@ -50,10 +50,6 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
                   color: Colors.black12,
                   width: 1,
                 ),
-                top: BorderSide(
-                  color: Colors.black12,
-                  width: 1,
-                ),
               ),
             ),
             child: ButtonBar(

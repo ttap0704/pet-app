@@ -6,9 +6,7 @@ import 'package:pet_app/views/daily/index.dart';
 import 'package:pet_app/views/index.dart';
 import 'package:pet_app/views/restaurant/index.dart';
 import 'package:pet_app/views/user/user.dart';
-import 'package:pet_app/widgets/common/app_bar.dart';
-import 'package:pet_app/widgets/common/bottom_nav.dart';
-import 'package:pet_app/styles.dart';
+import 'package:pet_app/widgets/layout/layout.dart';
 
 class LayoutDefault extends ConsumerStatefulWidget {
   const LayoutDefault({
@@ -25,66 +23,44 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
       'widget': const Home(),
       'title': 'home1',
       'useBackButton': false,
+      'useFloatingButton': false,
     },
     {
       'widget': const AccommodationIndex(),
       'title': 'home2',
       'useBackButton': true,
+      'useFloatingButton': false,
     },
     {
       'widget': const RestaurantIndex(),
       'title': 'home3',
       'useBackButton': true,
+      'useFloatingButton': false,
     },
     {
       'widget': const DailyIndex(),
       'title': 'home4',
       'useBackButton': true,
+      'useFloatingButton': true,
     },
     {
       'widget': const UserIndex(),
       'title': 'home5',
       'useBackButton': true,
+      'useFloatingButton': false,
     },
   ];
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final commonWatch = ref.watch(commonProvider);
-    final width = MediaQuery.of(context).size.width;
 
-    setImageSize(width);
-    if (width <= 600) {
-      defaultSize = 12;
-    } else if (width > 600 && width <= 768) {
-      defaultSize = 13;
-    } else if (width > 768 && width <= 992) {
-      defaultSize = 14;
-    } else if (width > 992 && width <= 1200) {
-      defaultSize = 15;
-    } else {
-      defaultSize = 16;
-    }
-
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: _defaultList[commonWatch.tabNumber]['title'],
-        useBackButton: _defaultList[commonWatch.tabNumber]['useBackButton'],
-      ),
-      body: Container(
-        child: _defaultList[commonWatch.tabNumber]['widget'],
-      ),
-      bottomNavigationBar: const CustomBottomNavigation(),
+    return Layout(
+      title: _defaultList[commonWatch.tabNumber]['title'],
+      useBackButton: _defaultList[commonWatch.tabNumber]['useBackButton'],
+      child: _defaultList[commonWatch.tabNumber]['widget'],
+      useFloatingButton: _defaultList[commonWatch.tabNumber]
+          ['useFloatingButton'],
     );
   }
 }

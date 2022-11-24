@@ -42,7 +42,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
       ),
       backgroundColor: isHome ? MungroadColors.orange : Colors.white,
       bottomOpacity: 1,
-      elevation: 0,
+      elevation: 1,
       shadowColor: Colors.black,
     );
   }
