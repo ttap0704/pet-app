@@ -3,6 +3,8 @@ class MungroadImageSize {
   late int accommodationSize = 1024;
   late int restaurantSize = 1024;
   late int roomsSize = 512;
+  static int profileSize = 512;
+  static int dailySize = 512;
 
   void init() {
     if (width <= 768 && width > 500) {

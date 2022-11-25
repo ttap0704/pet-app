@@ -5,6 +5,7 @@ import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_scroll_controller.dart';
+import 'package:pet_app/util/mungroad_tools.dart';
 
 class ListProduct extends ConsumerStatefulWidget {
   const ListProduct({
@@ -123,14 +124,18 @@ class PreviewContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     MungroadProduct currentProduct = product;
     // image file name
-    int targetPath = ((currentProduct.id / 50).floor() * 50);
-    String? typeEng = mungroadTypeEng[category];
-    List<String> splitedFileName = currentProduct.images[0].fileName.split('.');
-    String finalFileName =
-        '${splitedFileName[0]}_${imageSize.accommodationSize}.jpg';
-
-    String imagePath =
-        '$imageServerName/resize-image/$typeEng/$targetPath/${currentProduct.id}/$finalFileName';
+    int size = 0;
+    if (category == accommodationTypeNumber) {
+      size = imageSize.accommodationSize;
+    } else if (category == restaurantTypeNumber) {
+      size = imageSize.accommodationSize;
+    }
+    String imagePath = MungroadTools.getImageName(
+      currentProduct.id,
+      category,
+      currentProduct.images[0].fileName,
+      size,
+    );
 
     // label, address
     String label = currentProduct.label;

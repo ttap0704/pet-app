@@ -1,3 +1,4 @@
+import 'package:pet_app/classes/mungroad_daily.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/constant.dart';
@@ -14,19 +15,8 @@ class MungroadTools {
         final currentResult = result[i];
         final resultImages = currentResult[imageKey] as List<dynamic>;
 
-        final List<MungroadImage> productImages = [];
-        for (int y = 0, yleng = resultImages.length; y < yleng; y++) {
-          final currnetImage = resultImages[y];
-          final productImage = MungroadImage(
-            currnetImage['id'],
-            currnetImage['file_name'],
-            currnetImage['category'],
-            currnetImage['target_id'],
-            currnetImage['seq'],
-          );
+        final List<MungroadImage> productImages = setImageList(resultImages);
 
-          productImages.add(productImage);
-        }
         final product = MungroadProduct(
           productImages,
           currentResult['id'],
@@ -46,5 +36,66 @@ class MungroadTools {
     }
 
     return finalResult;
+  }
+
+  static Future<List<MungroadDaily>> makeDaily(List<dynamic> result) async {
+    List<MungroadDaily> finalResult = [];
+
+    if (result.isNotEmpty) {
+      for (int i = 0, leng = result.length; i < leng; i++) {
+        final currentResult = result[i];
+        final resultImages = currentResult['image_list'] as List<dynamic>;
+
+        final List<MungroadImage> productImages = setImageList(resultImages);
+
+        print(currentResult['id']);
+        final daily = MungroadDaily(
+          productImages,
+          currentResult['id'],
+          currentResult['comment_count'],
+          currentResult['contents'],
+          currentResult['image_count'],
+          currentResult['likes_count'],
+          currentResult['nickname'],
+          currentResult['profile_path'] ?? '',
+          currentResult['writer_id'],
+          currentResult['created_at'],
+        );
+
+        finalResult.add(daily);
+      }
+    }
+
+    return finalResult;
+  }
+
+  static List<MungroadImage> setImageList(List<dynamic> resultImages) {
+    final List<MungroadImage> productImages = [];
+    for (int y = 0, yleng = resultImages.length; y < yleng; y++) {
+      final currnetImage = resultImages[y];
+      final productImage = MungroadImage(
+        currnetImage['id'],
+        currnetImage['file_name'],
+        currnetImage['category'],
+        currnetImage['target_id'],
+        currnetImage['seq'],
+      );
+
+      productImages.add(productImage);
+    }
+
+    return productImages;
+  }
+
+  static String getImageName(int id, int category, String fileName, int size) {
+    int targetPath = ((id / 50).floor() * 50);
+    String? typeEng = mungroadTypeEng[category];
+    List<String> splitedFileName = fileName.split('.');
+    String finalFileName = '${splitedFileName[0]}_$size.jpg';
+
+    String imagePath =
+        '$imageServerName/resize-image/$typeEng/$targetPath/$id/$finalFileName';
+
+    return imagePath;
   }
 }

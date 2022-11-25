@@ -9,7 +9,8 @@ class MungroadDaily {
   int likesCount;
   String nickname;
   String profilePath;
-  String writerId;
+  int writerId;
+  String createdAt;
 
   MungroadDaily(
     this.imageList,
@@ -21,5 +22,6 @@ class MungroadDaily {
     this.nickname,
     this.profilePath,
     this.writerId,
+    this.createdAt,
   );
 }

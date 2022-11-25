@@ -1,4 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pet_app/classes/mungroad_daily.dart';
+import 'package:pet_app/classes/mungroad_daily.dart';
+import 'package:pet_app/classes/mungroad_daily.dart';
+import 'package:pet_app/classes/mungroad_daily.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/http.dart';
@@ -49,11 +53,29 @@ class MungroadScrollController extends ScrollController {
     return currentList;
   }
 
+  Future<List<MungroadDaily>> getDailyList() async {
+    page = page + 1;
+    String currentUrl = '/daily?page=$page';
+
+    final result = await HttpApi.getApi(currentUrl);
+    List<MungroadDaily> currentList = await MungroadTools.makeDaily(result);
+
+    if (currentList.length < take) {
+      hasmore = false;
+    }
+
+    return currentList;
+  }
+
   void setOptions(MungroadListOptions currentOptions) {
     options = currentOptions;
     page = 0;
   }
 
   MungroadScrollController(
-      this.productType, this.defaultUrl, this.take, this.options);
+    this.productType,
+    this.defaultUrl,
+    this.take,
+    this.options,
+  );
 }
