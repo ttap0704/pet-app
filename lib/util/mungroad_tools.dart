@@ -48,7 +48,6 @@ class MungroadTools {
 
         final List<MungroadImage> productImages = setImageList(resultImages);
 
-        print(currentResult['id']);
         final daily = MungroadDaily(
           productImages,
           currentResult['id'],
@@ -97,5 +96,32 @@ class MungroadTools {
         '$imageServerName/resize-image/$typeEng/$targetPath/$id/$finalFileName';
 
     return imagePath;
+  }
+
+  static String getWriteDate(createdAt) {
+    String currentWriteDate = '';
+
+    DateTime writeDate = DateTime.parse(createdAt);
+
+    int compareDateTime = writeDate.millisecondsSinceEpoch;
+    int nowDateTime = DateTime.now().millisecondsSinceEpoch;
+    int gap = nowDateTime - compareDateTime;
+
+    int oneminute = 1000 * 60;
+    int oneHour = oneminute * 60;
+    int oneDay = oneHour * 24;
+    int oneWeek = oneDay * 7;
+
+    if (gap < oneHour) {
+      currentWriteDate = '${(gap / oneminute).floor()}분 전';
+    } else if (gap >= oneHour && gap < oneDay) {
+      currentWriteDate = '${(gap / oneHour).floor()}시간 전';
+    } else if (gap >= oneDay && gap < oneWeek) {
+      currentWriteDate = '${(gap / oneDay).floor()}일 전';
+    } else {
+      currentWriteDate = writeDate.toString().substring(0, 10);
+    }
+
+    return currentWriteDate;
   }
 }
