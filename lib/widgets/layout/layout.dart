@@ -4,7 +4,7 @@ import 'package:pet_app/views/accommodation/index.dart';
 import 'package:pet_app/views/daily/index.dart';
 import 'package:pet_app/views/index.dart';
 import 'package:pet_app/views/restaurant/index.dart';
-import 'package:pet_app/views/user/user.dart';
+import 'package:pet_app/views/user/index.dart';
 import 'package:pet_app/widgets/common/app_bar.dart';
 import 'package:pet_app/widgets/common/bottom_nav.dart';
 import 'package:pet_app/styles.dart';

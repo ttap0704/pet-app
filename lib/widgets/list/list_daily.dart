@@ -104,7 +104,6 @@ class PreviewContainer extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: multiplyFree(defaultSize, 20),
       padding: EdgeInsets.all(multiplyFree(defaultSize, 1)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -145,7 +144,6 @@ class PreviewContainer extends StatelessWidget {
             ),
           ),
           Container(
-            height: multiplyFree(defaultSize, 14.5),
             child: DailyContents(
               daily: daily,
             ),
@@ -170,33 +168,33 @@ class DailyContents extends StatelessWidget {
       fontSize: multiplyFree(defaultSize, 1),
       color: Colors.black26,
     );
-    List<Widget> dailyContentsColumn = [Text(daily.contents)];
-    if (daily.imageCount > 0) {
+
+    List<Widget> dailyContentsColumn = [
+      Container(
+        padding: EdgeInsets.only(
+          right: multiplyFree(defaultSize, 3),
+          top: multiplyFree(defaultSize, 1),
+          bottom: multiplyFree(defaultSize, 1),
+        ),
+        child: Text(
+          daily.contents,
+          style: TextStyle(
+            fontSize: multiply12(defaultSize),
+          ),
+          maxLines: 6,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    ];
+    if (daily.imageCount + 2 > 0) {
+      final double previewImageWidth = multiplyFree(defaultSize, 15);
       dailyContentsColumn.add(
-        SizedBox(
-          // child: ListView.builder(
-          //   itemBuilder: (BuildContext context, int idx) {
-          //     final String fileName = MungroadTools.getImageName(
-          //       daily.id,
-          //       50,
-          //       daily.imageList[idx].fileName,
-          //       MungroadImageSize.dailySize,
-          //     );
-          //     return Container(
-          //       width: double.infinity / 2,
-          //       height: multiplyFree(defaultSize, 24),
-          //       decoration: BoxDecoration(
-          //         image: DecorationImage(
-          //           image: NetworkImage(fileName),
-          //           fit: BoxFit.cover,
-          //         ),
-          //       ),
-          //     );
-          //   },
-          //   itemCount: daily.imageList.length,
-          //   shrinkWrap: true,
-          // ),
-          height: multiplyFree(defaultSize, 10),
+        Container(
+          width: multiplyFree(defaultSize, 30),
+          height: multiplyFree(defaultSize, 12),
+          padding: EdgeInsets.symmetric(
+            vertical: multiplyFree(defaultSize, 1),
+          ),
           child: Row(
             children: [
               ...daily.imageList.map((entry) {
@@ -207,18 +205,58 @@ class DailyContents extends StatelessWidget {
                   daily.imageList[idx].fileName,
                   MungroadImageSize.dailySize,
                 );
-                return Container(
-                  width: multiplyFree(defaultSize, 12),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(fileName),
-                      fit: BoxFit.cover,
+
+                String plusText = '';
+                double marginRight = 0;
+                if (idx == 0) {
+                  marginRight = multiplyFree(defaultSize, 0.25);
+                } else {
+                  if (daily.imageCount > 0) {
+                    plusText = '+ ${daily.imageCount}';
+                  }
+                }
+
+                Widget plusContents = Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromARGB(25, 0, 0, 0),
+                        Color.fromARGB(25, 0, 0, 0),
+                      ],
                     ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        multiply09(defaultSize),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        plusText,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: multiply14(defaultSize),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+                return Flexible(
+                  child: Container(
+                    margin: EdgeInsets.only(right: marginRight),
+                    height: multiplyFree(defaultSize, 10),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(fileName),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          multiply09(defaultSize),
+                        ),
                       ),
                     ),
+                    child: plusContents,
                   ),
                 );
               })
@@ -227,23 +265,25 @@ class DailyContents extends StatelessWidget {
         ),
       );
     }
-    dailyContentsColumn.add(Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          '댓글 ${daily.commentCount}개',
-          style: commentsTextStyle,
-        ),
-        SizedBox(
-          width: multiply05(defaultSize),
-        ),
-        Text(
-          '좋아요 ${daily.likesCount}개',
-          style: commentsTextStyle,
-        ),
-      ],
-    ));
+    dailyContentsColumn.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            '댓글 ${daily.commentCount}개',
+            style: commentsTextStyle,
+          ),
+          SizedBox(
+            width: multiply05(defaultSize),
+          ),
+          Text(
+            '좋아요 ${daily.likesCount}개',
+            style: commentsTextStyle,
+          ),
+        ],
+      ),
+    );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
