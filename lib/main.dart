@@ -1,12 +1,29 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_app/classes/mungroad_colors.dart';
+import 'package:pet_app/styles.dart';
 import 'package:pet_app/widgets/layout/layout_default.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: MaterialApp(
-        home: MyApp(),
+        theme: ThemeData(
+            fontFamily: 'NanumSquareRound',
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MungroadColors.orange,
+              ),
+            ),
+            outlinedButtonTheme: OutlinedButtonThemeData(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: MungroadColors.orange,
+                side: const BorderSide(
+                  color: MungroadColors.orange,
+                ),
+              ),
+            )),
+        home: const MyApp(),
       ),
     ),
   );
