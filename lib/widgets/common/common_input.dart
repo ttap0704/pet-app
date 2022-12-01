@@ -17,6 +17,33 @@ class CommonInput extends ConsumerStatefulWidget {
 }
 
 class CommonInputState extends ConsumerState<CommonInput> {
+  String _hint = '';
+  String _value = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    String tmpHint = '';
+    String tmpValue = '';
+    if (widget.hint != null) {
+      tmpHint = widget.hint.toString();
+    } else {
+      tmpHint = '';
+    }
+
+    if (widget.value != null) {
+      tmpValue = widget.value.toString();
+    } else {
+      tmpValue = '';
+    }
+
+    setState(() {
+      _hint = tmpHint;
+      _value = tmpValue;
+    });
+  }
+
   final OutlineInputBorder commonBorderStyle = const OutlineInputBorder(
     borderSide: BorderSide(
       color: Colors.black12,
@@ -35,13 +62,13 @@ class CommonInputState extends ConsumerState<CommonInput> {
         enabledBorder: commonBorderStyle,
         isDense: true,
         contentPadding: EdgeInsets.symmetric(
-          vertical: multiplyFree(defaultSize, 1.2),
-          horizontal: multiplyFree(defaultSize, 1.2),
+          vertical: multiplyFree(defaultSize, 1.5),
+          horizontal: multiplyFree(defaultSize, 1),
         ),
         labelStyle: fieldTextStyle,
         hintStyle: fieldTextStyle,
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        hintText: 'hih',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintText: _hint,
       ),
       cursorColor: Colors.black12,
     );

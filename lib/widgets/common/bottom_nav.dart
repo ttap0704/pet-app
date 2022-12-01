@@ -30,24 +30,49 @@ class CustomBottomNavigationState
   Widget build(BuildContext context) {
     final commonRead = ref.read(commonProvider.notifier);
     final commonWatch = ref.watch(commonProvider);
-    return BottomNavigationBar(
-      onTap: (int tab) {
-        commonRead.setTabNumber(tab);
-      },
-      items: <BottomNavigationBarItem>[
-        ..._navigationItems.map((entry) {
-          return BottomNavigationBarItem(
-            icon: Icon(entry['icon']),
-            label: '',
-          );
-        }).toList()
-      ],
-      currentIndex: commonWatch.tabNumber,
-      unselectedItemColor: Colors.black26,
-      selectedItemColor: MungroadColors.orange,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      type: BottomNavigationBarType.fixed,
+    final double width = MediaQuery.of(context).size.width;
+
+    double paddingValue = 0;
+    if (width > 1000) {
+      paddingValue = (width - 1000) / 2;
+    }
+
+    return Container(
+      height: kBottomNavigationBarHeight,
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.symmetric(
+        horizontal: paddingValue,
+      ),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(
+            color: Colors.black12,
+            width: 1,
+          ),
+        ),
+      ),
+      child: BottomNavigationBar(
+        onTap: (int tab) {
+          commonRead.setTabNumber(tab);
+        },
+        items: <BottomNavigationBarItem>[
+          ..._navigationItems.map((entry) {
+            return BottomNavigationBarItem(
+              icon: Icon(entry['icon']),
+              label: '',
+            );
+          }).toList()
+        ],
+        currentIndex: commonWatch.tabNumber,
+        unselectedItemColor: Colors.black26,
+        selectedItemColor: MungroadColors.orange,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
     );
   }
 }

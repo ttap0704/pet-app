@@ -27,23 +27,42 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
     final commonWatch = ref.watch(commonProvider);
 
     final bool isHome = commonWatch.tabNumber == 0 ? true : false;
-    final Color homeTitleColor = isHome ? Colors.white : Colors.black;
+    final double width = MediaQuery.of(context).size.width;
 
-    return AppBar(
-      leading: widget.useBackButton ? const BackButton() : null,
-      centerTitle: true,
-      title: Text(
-        widget.title,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: multiply20(defaultSize),
-          fontWeight: FontWeight.w700,
-        ),
+    double paddingValue = 0;
+    if (width > 1000) {
+      paddingValue = (width - 1000) / 2;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: paddingValue,
       ),
-      backgroundColor: isHome ? MungroadColors.orange : Colors.white,
-      bottomOpacity: 1,
-      elevation: 1,
-      shadowColor: Colors.black,
+      decoration: BoxDecoration(
+        border: const Border(
+          bottom: BorderSide(
+            color: Colors.black12,
+            width: 1,
+          ),
+        ),
+        color: isHome ? MungroadColors.orange : Colors.white,
+      ),
+      child: AppBar(
+        leading: widget.useBackButton ? const BackButton() : null,
+        centerTitle: true,
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: multiply20(defaultSize),
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        backgroundColor: isHome ? MungroadColors.orange : Colors.white,
+        bottomOpacity: 1,
+        elevation: 0,
+        shadowColor: Colors.black,
+      ),
     );
   }
 

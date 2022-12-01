@@ -32,6 +32,12 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+
+    double paddingValue = 0;
+    if (width > 1000) {
+      paddingValue = (width - 1000) / 2;
+    }
     return Container(
       color: Colors.white,
       width: double.infinity,
@@ -51,6 +57,9 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
                   width: 1,
                 ),
               ),
+            ),
+            padding: EdgeInsets.symmetric(
+              horizontal: paddingValue,
             ),
             child: ButtonBar(
               buttonHeight: multiply20(defaultSize),
@@ -85,9 +94,12 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
               ],
             ),
           ),
-          SizedBox(
+          Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height - 160,
+            padding: EdgeInsets.symmetric(
+              horizontal: paddingValue,
+            ),
             child: Container(
               padding: EdgeInsets.symmetric(
                 vertical: multiply14(defaultSize),

@@ -14,10 +14,20 @@ class LayoutContents extends ConsumerStatefulWidget {
 class LayoutContentsState extends ConsumerState<LayoutContents> {
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+
+    double paddingValue = 0;
+    if (width > 1000) {
+      paddingValue = (width - 1000) / 2;
+    }
+
     return Container(
       color: Colors.white,
       width: double.infinity,
       height: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: paddingValue,
+      ),
       child: widget.child,
     );
   }
