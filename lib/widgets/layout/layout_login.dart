@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pet_app/classes/mungroad_input_format.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/util/mungroad_input_controller.dart';
 import 'package:pet_app/widgets/common/common_input.dart';
 
 class LayoutLogin extends ConsumerStatefulWidget {
@@ -13,15 +15,33 @@ class LayoutLogin extends ConsumerStatefulWidget {
 class LayoutLoginState extends ConsumerState<LayoutLogin> {
   @override
   Widget build(BuildContext context) {
-    Map _loginInfo = {
-      'id': 'ttap0704@naver.com',
-      'password': 'ttap0704@naver',
-    };
+    List<MungroadInputFormat> loginInfo = [
+      MungroadInputFormat(
+        'id',
+        '',
+        'text',
+        'email',
+        '이메일을 입력해주세요.',
+        0,
+      ),
+      MungroadInputFormat(
+        'password',
+        '',
+        'password',
+        'password',
+        '비밀번호를 입력해주세요.',
+        0,
+      ),
+    ];
 
     TextStyle buttonTextStyle = TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: multiplyFree(defaultSize, 1),
     );
+
+    void handleLogin() {
+      print('${loginInfo[0].value}, ${loginInfo[1].value}');
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -38,15 +58,13 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
           height: multiply12(defaultSize),
         ),
         CommonInput(
-          hint: '이메일을 입력해주세요.',
-          value: _loginInfo['id'],
+          data: loginInfo[0],
         ),
         SizedBox(
           height: multiply05(defaultSize),
         ),
         CommonInput(
-          hint: '비밀번호를 입력해주세요.',
-          value: _loginInfo['password'],
+          data: loginInfo[1],
         ),
         SizedBox(
           height: multiplyFree(defaultSize, 1.5),
@@ -54,7 +72,7 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
         FractionallySizedBox(
           widthFactor: 1,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: handleLogin,
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(
                 vertical: multiply15(defaultSize),

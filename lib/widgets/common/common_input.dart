@@ -1,46 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pet_app/classes/mungroad_input_format.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/util/mungroad_input_controller.dart';
 
 class CommonInput extends ConsumerStatefulWidget {
   const CommonInput({
     Key? key,
-    this.hint,
-    this.value,
+    required this.data,
   }) : super(key: key);
 
-  final String? hint;
-  final String? value;
+  final MungroadInputFormat data;
 
   @override
   CommonInputState createState() => CommonInputState();
 }
 
 class CommonInputState extends ConsumerState<CommonInput> {
-  String _hint = '';
-  String _value = '';
+  final TextEditingController _inputController = MungroadInputController();
+  final FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    String tmpHint = '';
-    String tmpValue = '';
-    if (widget.hint != null) {
-      tmpHint = widget.hint.toString();
-    } else {
-      tmpHint = '';
-    }
-
-    if (widget.value != null) {
-      tmpValue = widget.value.toString();
-    } else {
-      tmpValue = '';
-    }
-
     setState(() {
-      _hint = tmpHint;
-      _value = tmpValue;
+      _inputController.text = widget.data.value;
+    });
+
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        widget.data.updateValue(_inputController.text);
+      }
     });
   }
 
@@ -55,7 +46,11 @@ class CommonInputState extends ConsumerState<CommonInput> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: _inputController,
       style: fieldTextStyle,
+      focusNode: focusNode,
+      obscureText: widget.data.inputType == 'password' ? true : false,
+      obscuringCharacter: '\u{2022}',
       decoration: InputDecoration(
         border: commonBorderStyle,
         focusedBorder: commonBorderStyle,
@@ -68,7 +63,7 @@ class CommonInputState extends ConsumerState<CommonInput> {
         labelStyle: fieldTextStyle,
         hintStyle: fieldTextStyle,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        hintText: _hint,
+        hintText: widget.data.hint,
       ),
       cursorColor: Colors.black12,
     );

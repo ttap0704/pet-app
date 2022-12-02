@@ -11,4 +11,17 @@ class HttpApi {
 
     return resultJson;
   }
+
+  static postApi(String url, Object data) async {
+    final Uri postUrl = Uri.parse('$serverName$url');
+    final result = await http.post(
+      postUrl,
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    );
+    final resultJson = jsonDecode(result.body);
+
+    return resultJson;
+  }
 }
