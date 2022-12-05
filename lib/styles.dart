@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pet_app/classes/mungroad_image_size.dart';
+
+// root context
+BuildContext? rootContext;
 
 // multifly Start
 int defaultSize = 0;

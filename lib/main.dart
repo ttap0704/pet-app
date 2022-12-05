@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/widgets/dialog/dialog_alert.dart';
 import 'package:pet_app/widgets/layout/layout_default.dart';
 
 void main() {
@@ -38,12 +39,8 @@ class MyApp extends ConsumerStatefulWidget {
 
 class MyAppState extends ConsumerState<MyApp> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    rootContext = context;
     return const LayoutDefault();
   }
 }

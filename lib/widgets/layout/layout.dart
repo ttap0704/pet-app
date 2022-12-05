@@ -58,9 +58,7 @@ class LayoutState extends ConsumerState<Layout> {
         title: widget.title,
         useBackButton: widget.useBackButton,
       ),
-      body: Container(
-        child: widget.child,
-      ),
+      body: widget.child,
       bottomNavigationBar: const CustomBottomNavigation(),
     );
   }

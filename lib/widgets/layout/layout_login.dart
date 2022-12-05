@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_input_format.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/util/mungroad_input_controller.dart';
 import 'package:pet_app/widgets/common/common_input.dart';
 
@@ -40,7 +41,15 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
     );
 
     void handleLogin() {
-      print('${loginInfo[0].value}, ${loginInfo[1].value}');
+      Map currentLoginInfo = {
+        'login_id': loginInfo[0].value,
+        'password': loginInfo[1].value,
+      };
+
+      if (currentLoginInfo['login_id'].toString().isEmpty ||
+          currentLoginInfo['password'].toString().isEmpty) {
+        MungroadDailog.openDialogAlert('에러', 'ㅗㅈ');
+      }
     }
 
     return Column(

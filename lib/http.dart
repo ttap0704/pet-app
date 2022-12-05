@@ -17,7 +17,7 @@ class HttpApi {
     final result = await http.post(
       postUrl,
       headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
     );
     final resultJson = jsonDecode(result.body);
