@@ -9,6 +9,7 @@ class ImageStyleState {
   ImageStyleState setImageSize({
     required double width,
   }) {
+    //test
     if (width <= 768 && width > 500) {
       accommodationSize = 768;
       restaurantSize = 768;
