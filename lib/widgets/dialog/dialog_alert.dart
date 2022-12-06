@@ -1,16 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/styles.dart';
 
 class DialogAlert extends ConsumerStatefulWidget {
-  const DialogAlert({
-    Key? key,
-    required this.title,
-    required this.content,
-  }) : super(key: key);
+  const DialogAlert({Key? key, required this.content, this.callback})
+      : super(key: key);
 
-  final String title;
   final String content;
+  final Function? callback;
 
   @override
   DialogAlertState createState() => DialogAlertState();
@@ -18,25 +17,50 @@ class DialogAlert extends ConsumerStatefulWidget {
 
 class DialogAlertState extends ConsumerState<DialogAlert> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer(const Duration(seconds: 2), () {
+      Navigator.pop(rootContext as BuildContext);
+
+      if (widget.callback != null) {
+        widget.callback!();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       alignment: Alignment.center,
-      backgroundColor: const Color.fromARGB(25, 0, 0, 0),
+      contentPadding: EdgeInsets.zero,
+      backgroundColor: Colors.transparent,
       contentTextStyle: TextStyle(
         color: Colors.white,
         fontSize: multiplyFree(defaultSize, 1),
       ),
-      contentPadding: EdgeInsets.all(multiplyFree(defaultSize, 1)),
+      elevation: 0,
       content: Container(
-        constraints: BoxConstraints(
-          maxWidth: double.infinity,
+        padding: EdgeInsets.symmetric(
+          vertical: multiplyFree(defaultSize, 2),
+        ),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(75, 0, 0, 0),
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              multiply09(defaultSize),
+            ),
+          ),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               widget.content,
               softWrap: true,
+              textAlign: TextAlign.center,
             ),
           ],
         ),

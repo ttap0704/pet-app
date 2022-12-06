@@ -19,6 +19,7 @@ class HttpApi {
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
+      body: jsonEncode(data),
     );
     final resultJson = jsonDecode(result.body);
 

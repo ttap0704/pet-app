@@ -4,7 +4,8 @@ class UserState {
   int id;
   String loginId;
   String nickname;
-  String profilePath;
+  String? profilePath;
+  String? phone;
   int type;
   int certification;
 
