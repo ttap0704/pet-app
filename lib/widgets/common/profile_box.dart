@@ -8,14 +8,12 @@ class ProfileBox extends ConsumerStatefulWidget {
   const ProfileBox({
     Key? key,
     required this.profilePath,
-    required this.width,
-    required this.height,
+    required this.size,
     required this.userId,
   }) : super(key: key);
 
   final String profilePath;
-  final double width;
-  final double height;
+  final double size;
   final int userId;
 
   @override
@@ -30,7 +28,10 @@ class ProfileBoxState extends ConsumerState<ProfileBox> {
     super.initState();
 
     if (widget.profilePath.isEmpty) {
-      _contentsWidget = const Icon(Icons.pets);
+      _contentsWidget = Icon(
+        Icons.pets,
+        size: widget.size / 2,
+      );
     } else {
       List<String> pathSplited = widget.profilePath.split('/');
       String fileName = pathSplited[pathSplited.length - 1];
@@ -42,8 +43,8 @@ class ProfileBoxState extends ConsumerState<ProfileBox> {
       );
 
       _contentsWidget = Container(
-        width: widget.width,
-        height: widget.height,
+        width: widget.size,
+        height: widget.size,
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
@@ -64,8 +65,8 @@ class ProfileBoxState extends ConsumerState<ProfileBox> {
     }
 
     return Container(
-      width: widget.width,
-      height: widget.height,
+      width: widget.size,
+      height: widget.size,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.black12,

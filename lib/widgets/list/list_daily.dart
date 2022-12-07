@@ -115,8 +115,7 @@ class PreviewContainer extends StatelessWidget {
               children: [
                 ProfileBox(
                   profilePath: daily.profilePath,
-                  width: multiplyFree(defaultSize, 3.5),
-                  height: multiplyFree(defaultSize, 3.5),
+                  size: multiplyFree(defaultSize, 3.5),
                   userId: daily.writerId,
                 ),
                 SizedBox(

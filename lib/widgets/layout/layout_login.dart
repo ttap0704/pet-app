@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_input_format.dart';
 import 'package:pet_app/http.dart';
+import 'package:pet_app/store/user.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/widgets/common/common_input.dart';
@@ -54,14 +55,33 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
             await HttpApi.postApi('/users/login', currentLoginInfo);
 
         if (loginResult['pass'] == true) {
-          print(loginResult);
+          final info = loginResult['user'];
+          print(info);
+          MungroadDailog.openDialogAlert(
+            '${info['nickname']}님 환영합니다!',
+            () {
+              final readUser = ref.read(userProvider.notifier);
+              final UserState user = UserState(
+                info['id'],
+                info['login_id'],
+                info['nickname'],
+                info['type'],
+                info['certification'],
+                info['profile_path'] ?? '',
+                info['phone'] ?? '',
+              );
+              readUser.setUser(user);
+            },
+          );
         } else {
           final String message = loginResult['message'];
           if (message == 'Wrong Password' || message == 'Wrong Email') {
             MungroadDailog.openDialogAlert('입력하신 정보를 확인해주세요.', null);
           } else if (message == 'Only Kakao') {
             MungroadDailog.openDialogAlert(
-                '해당 이메일은 카카오로 가입한 계정입니다.\r\n카카오 로그인을 이용해주세요.', null);
+              '해당 이메일은 카카오로 가입한 계정입니다.\r\n카카오 로그인을 이용해주세요.',
+              null,
+            );
           }
         }
       }

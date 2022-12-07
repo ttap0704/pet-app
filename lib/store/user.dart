@@ -4,10 +4,10 @@ class UserState {
   int id;
   String loginId;
   String nickname;
-  String? profilePath;
-  String? phone;
   int type;
   int certification;
+  String profilePath;
+  String phone;
 
   UserState setUser({
     required UserState user,
@@ -16,9 +16,10 @@ class UserState {
       user.id,
       user.loginId,
       user.nickname,
-      user.profilePath,
       user.type,
       user.certification,
+      user.profilePath,
+      user.phone,
     );
   }
 
@@ -26,14 +27,15 @@ class UserState {
     this.id,
     this.loginId,
     this.nickname,
-    this.profilePath,
     this.type,
     this.certification,
+    this.profilePath,
+    this.phone,
   );
 }
 
 class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier() : super(UserState(0, '', '', '', 0, 0));
+  UserNotifier() : super(UserState(0, '', '', 0, 0, '', ''));
 
   void setUser(UserState user) {
     state = state.setUser(user: user);
