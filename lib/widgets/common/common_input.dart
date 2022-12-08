@@ -27,12 +27,6 @@ class CommonInputState extends ConsumerState<CommonInput> {
     setState(() {
       _inputController.text = widget.data.value;
     });
-
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        widget.data.updateValue(_inputController.text);
-      }
-    });
   }
 
   final OutlineInputBorder commonBorderStyle = const OutlineInputBorder(
@@ -43,6 +37,10 @@ class CommonInputState extends ConsumerState<CommonInput> {
   final TextStyle fieldTextStyle =
       TextStyle(fontSize: multiplyFree(defaultSize, 1));
 
+  void handleInput(String value) {
+    widget.data.updateValue(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -51,6 +49,7 @@ class CommonInputState extends ConsumerState<CommonInput> {
       focusNode: focusNode,
       obscureText: widget.data.inputType == 'password' ? true : false,
       obscuringCharacter: '\u{2022}',
+      onChanged: handleInput,
       decoration: InputDecoration(
         border: commonBorderStyle,
         focusedBorder: commonBorderStyle,

@@ -6,10 +6,8 @@ import 'package:pet_app/styles.dart';
 class CustomFloatingButton extends ConsumerStatefulWidget {
   const CustomFloatingButton({
     Key? key,
-    required this.actionWidget,
   }) : super(key: key);
 
-  final Widget actionWidget;
   @override
   CustomFloatingButtonState createState() => CustomFloatingButtonState();
 }

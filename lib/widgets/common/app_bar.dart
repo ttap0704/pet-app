@@ -76,7 +76,10 @@ class BackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.chevron_left),
+      icon: const Icon(
+        Icons.chevron_left,
+        color: Colors.black,
+      ),
       onPressed: () => {
         Navigator.of(context).pop(),
       },

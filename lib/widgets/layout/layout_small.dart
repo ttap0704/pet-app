@@ -3,9 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/styles.dart';
 
 class LayoutSmall extends ConsumerStatefulWidget {
-  const LayoutSmall({Key? key, required this.child}) : super(key: key);
+  const LayoutSmall({
+    Key? key,
+    required this.child,
+    required this.maxWidthValue,
+  }) : super(key: key);
 
   final Widget child;
+  final double maxWidthValue;
+
   @override
   LayoutSmallState createState() => LayoutSmallState();
 }
@@ -19,7 +25,7 @@ class LayoutSmallState extends ConsumerState<LayoutSmall> {
       height: double.infinity,
       alignment: Alignment.center,
       child: Container(
-        width: multiplyFree(defaultSize, 22),
+        width: multiplyFree(defaultSize, widget.maxWidthValue),
         height: double.infinity,
         padding: EdgeInsets.symmetric(
           vertical: multiplyFree(defaultSize, 3),

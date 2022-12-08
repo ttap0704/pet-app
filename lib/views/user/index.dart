@@ -20,7 +20,10 @@ class UserIndexState extends ConsumerState<UserIndex> {
     final watchUser = ref.watch(userProvider);
 
     if (watchUser.id == 0) {
-      return const LayoutSmall(child: LayoutLogin());
+      return const LayoutSmall(
+        maxWidthValue: 22,
+        child: LayoutLogin(),
+      );
     } else {
       return UserMenu(
         user: watchUser,
@@ -55,6 +58,7 @@ class UserMenu extends StatelessWidget {
     List<String> menu = ['내 정보', '공지사항 및 이벤트', '로그아웃'];
 
     return LayoutSmall(
+      maxWidthValue: 30,
       child: Column(
         children: [
           Row(
@@ -165,6 +169,22 @@ class UserMenu extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: multiplyFree(defaultSize, 1)),
+          Container(
+            width: double.infinity,
+            height: multiplyFree(defaultSize, 3),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black12,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(
+                multiply09(defaultSize),
+              ),
+            ),
+            child: const Text('카카오톡 1:1 문의'),
+          )
         ],
       ),
     );

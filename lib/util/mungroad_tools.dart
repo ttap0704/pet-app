@@ -1,7 +1,10 @@
+import 'package:pet_app/classes/mungroad_accommodation.dart';
 import 'package:pet_app/classes/mungroad_daily.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
+import 'package:pet_app/classes/mungroad_room.dart';
 import 'package:pet_app/constant.dart';
+import 'package:pet_app/http.dart';
 
 class MungroadTools {
   static Future<List<MungroadProduct>> makeProduct(
@@ -29,6 +32,10 @@ class MungroadTools {
           currentResult['zonecode'],
           currentResult['road_address'],
           currentResult['introduction'],
+          '',
+          '',
+          '',
+          '',
         );
 
         finalResult.add(product);
@@ -123,5 +130,54 @@ class MungroadTools {
     }
 
     return currentWriteDate;
+  }
+
+  static Future<MungroadAccommodation> getAccommodationDetail(int id) async {
+    final result = await HttpApi.getApi('/accommodation/$id');
+    final List<MungroadImage> productImages =
+        setImageList(result['accommodation_images']);
+    final product = MungroadProduct(
+      productImages,
+      result['id'],
+      result['bname'],
+      result['detail_address'],
+      result['label'],
+      result['type'],
+      result['sido'],
+      result['sigungu'],
+      result['zonecode'],
+      result['road_address'],
+      result['introduction'],
+      result['building_name'],
+      result['contact'],
+      result['site'],
+      result['kakao_chat'],
+    );
+
+    final List<MungroadRoom> rooms = [];
+    for (int i = 0, leng = result['accommodation_rooms'].length;
+        i < leng;
+        i++) {
+      final currentRoom = result['accommodation_rooms'][i];
+
+      final List<MungroadImage> roomImages =
+          setImageList(currentRoom['rooms_images']);
+      final MungroadRoom tmpRoom = MungroadRoom(
+        currentRoom['id'],
+        currentRoom['label'],
+        roomImages,
+        currentRoom['normal_price'],
+        currentRoom['normal_weekend_price'],
+        currentRoom['peak_price'],
+        currentRoom['peak_weekend_price'],
+        currentRoom['entrance'],
+        currentRoom['leaving'],
+        currentRoom['standard_num'],
+        currentRoom['maximum_num'],
+      );
+      rooms.add(tmpRoom);
+    }
+
+    return MungroadAccommodation(product, rooms);
   }
 }

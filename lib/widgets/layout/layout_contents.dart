@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../list/list_daily.dart';
-
 class LayoutContents extends ConsumerStatefulWidget {
   const LayoutContents({Key? key, required this.child}) : super(key: key);
 

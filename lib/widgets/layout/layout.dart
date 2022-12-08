@@ -50,9 +50,7 @@ class LayoutState extends ConsumerState<Layout> {
 
     return Scaffold(
       floatingActionButton: widget.useFloatingButton
-          ? CustomFloatingButton(
-              actionWidget: Container(),
-            )
+          ? const CustomFloatingButton()
           : const SizedBox(width: 0, height: 0),
       appBar: CustomAppBar(
         title: widget.title,

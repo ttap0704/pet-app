@@ -6,6 +6,7 @@ import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_scroll_controller.dart';
 import 'package:pet_app/util/mungroad_tools.dart';
+import 'package:pet_app/views/accommodation/detail.dart';
 
 class ListProduct extends ConsumerStatefulWidget {
   const ListProduct({
@@ -73,6 +74,21 @@ class ListProductState extends ConsumerState<ListProduct> {
     });
   }
 
+  void moveProductDetail(int id) {
+    if (widget.productType == 1) {
+      print('$id, ${widget.productType}');
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AccommodationDetail(
+            id: id,
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -81,6 +97,7 @@ class ListProductState extends ConsumerState<ListProduct> {
       return ListView.builder(
         itemBuilder: (BuildContext context, int idx) {
           return PreviewContainer(
+            onTap: moveProductDetail,
             product: _currentProductList[idx],
             category: widget.productType,
           );
@@ -115,10 +132,12 @@ class PreviewContainer extends StatelessWidget {
     Key? key,
     required this.product,
     required this.category,
+    required this.onTap,
   }) : super(key: key);
 
   final MungroadProduct product;
   final int category;
+  final void Function(int) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -152,50 +171,55 @@ class PreviewContainer extends StatelessWidget {
       multiplyValue = 13;
     }
 
-    return Container(
-      height: multiplyFree(defaultSize, multiplyValue),
-      margin: EdgeInsets.only(bottom: multiply09(defaultSize)),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(multiply05(defaultSize)),
-        ),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(imagePath),
-        ),
-      ),
+    return GestureDetector(
+      onTap: () {
+        onTap(product.id);
+      },
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(0, 0, 0, 0),
-              Color.fromARGB(75, 0, 0, 0),
-            ],
+        height: multiplyFree(defaultSize, multiplyValue),
+        margin: EdgeInsets.only(bottom: multiply09(defaultSize)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(multiply05(defaultSize)),
+          ),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(imagePath),
           ),
         ),
-        padding: EdgeInsets.all(multiply15(defaultSize)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: multiply16(defaultSize),
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(0, 0, 0, 0),
+                Color.fromARGB(75, 0, 0, 0),
+              ],
             ),
-            Text(
-              address,
-              style: TextStyle(
-                fontSize: multiply11(defaultSize),
-                color: Colors.white,
+          ),
+          padding: EdgeInsets.all(multiply15(defaultSize)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: multiply16(defaultSize),
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-          ],
+              Text(
+                address,
+                style: TextStyle(
+                  fontSize: multiply11(defaultSize),
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

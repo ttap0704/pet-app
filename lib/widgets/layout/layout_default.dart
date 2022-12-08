@@ -28,25 +28,25 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
     {
       'widget': const AccommodationIndex(),
       'title': 'home2',
-      'useBackButton': true,
+      'useBackButton': false,
       'useFloatingButton': false,
     },
     {
       'widget': const RestaurantIndex(),
       'title': 'home3',
-      'useBackButton': true,
+      'useBackButton': false,
       'useFloatingButton': false,
     },
     {
       'widget': const DailyIndex(),
       'title': 'home4',
-      'useBackButton': true,
+      'useBackButton': false,
       'useFloatingButton': true,
     },
     {
       'widget': const UserIndex(),
       'title': 'home5',
-      'useBackButton': true,
+      'useBackButton': false,
       'useFloatingButton': false,
     },
   ];

@@ -29,5 +29,9 @@ class MungroadProduct {
     this.zonecode,
     this.roadAddress,
     this.introdution,
+    buildingName,
+    contact,
+    site,
+    kakaoChat,
   );
 }
