@@ -3,6 +3,7 @@ class MungroadImageSize {
   late int accommodationSize = 1024;
   late int restaurantSize = 1024;
   late int roomsSize = 512;
+  static double multiplyValue = 23;
   static int profileSize = 512;
   static int dailySize = 512;
 
@@ -17,6 +18,14 @@ class MungroadImageSize {
       accommodationSize = 512;
       restaurantSize = 512;
       roomsSize = 512;
+    }
+
+    if (width < 500 && width >= 400) {
+      multiplyValue = 18;
+    } else if (width < 400 && width >= 300) {
+      multiplyValue = 16;
+    } else if (width < 300) {
+      multiplyValue = 13;
     }
   }
 

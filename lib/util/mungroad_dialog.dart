@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/widgets/dialog/dialog_alert.dart';
+import 'package:pet_app/widgets/dialog/dialog_slider.dart';
 
 class MungroadDailog {
   static Function(Widget widget) showCustomDialog = (Widget widget) => {
@@ -24,6 +26,13 @@ class MungroadDailog {
       (String content, Function? callback) => {
             showCustomDialog(
               DialogAlert(content: content, callback: callback),
+            )
+          };
+
+  static Function(List<MungroadImage> images) openDialogSlider =
+      (List<MungroadImage> images) => {
+            showCustomDialog(
+              DialogSlider(images: images),
             )
           };
 }
