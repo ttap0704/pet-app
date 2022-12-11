@@ -6,6 +6,14 @@ import 'package:pet_app/styles.dart';
 import 'package:pet_app/widgets/dialog/dialog_alert.dart';
 import 'package:pet_app/widgets/dialog/dialog_slider.dart';
 
+class MungroadDialogOptions {
+  bool useBarrier;
+
+  MungroadDialogOptions(
+    this.useBarrier,
+  );
+}
+
 class MungroadDailog {
   static Function(Widget widget) showCustomDialog = (Widget widget) => {
         showAnimatedDialog(
@@ -13,8 +21,6 @@ class MungroadDailog {
           context: rootContext as BuildContext,
           builder: (BuildContext dialogContext) {
             return widget;
-            // return
-            // return ;
           },
           animationType: DialogTransitionType.slideFromBottom,
           curve: Curves.ease,
@@ -29,10 +35,9 @@ class MungroadDailog {
             )
           };
 
-  static Function(List<MungroadImage> images) openDialogSlider =
-      (List<MungroadImage> images) => {
-            showCustomDialog(
-              DialogSlider(images: images),
-            )
-          };
+  static Function(Widget child) openDialogSlider = (Widget child) => {
+        showCustomDialog(
+          DialogSlider(child: child),
+        )
+      };
 }

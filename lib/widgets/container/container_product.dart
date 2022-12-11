@@ -21,22 +21,15 @@ class ContainerProduct extends ConsumerStatefulWidget {
 class ContainerProductState extends ConsumerState<ContainerProduct> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(multiply05(defaultSize)),
+    return Column(
+      children: [
+        ContainerImageSlider(
+          targetId: widget.product.id,
+          images: widget.product.images,
+          category: widget.category,
+          useFullScreen: true,
         ),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: Stack(
-        children: [
-          ContainerImageSlider(
-            targetId: widget.product.id,
-            images: widget.product.images,
-            category: widget.category,
-          ),
-        ],
-      ),
+      ],
     );
   }
 }

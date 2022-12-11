@@ -7,19 +7,20 @@ import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/util/mungroad_tools.dart';
-import 'package:pet_app/widgets/common/full_screen_slider.dart';
 
 class ContainerImageSlider extends ConsumerStatefulWidget {
-  const ContainerImageSlider({
-    Key? key,
-    required this.targetId,
-    required this.images,
-    required this.category,
-  }) : super(key: key);
+  const ContainerImageSlider(
+      {Key? key,
+      required this.targetId,
+      required this.images,
+      required this.category,
+      required this.useFullScreen})
+      : super(key: key);
 
   final int targetId;
   final List<MungroadImage> images;
   final int category;
+  final bool useFullScreen;
   @override
   ContainerImageSliderState createState() => ContainerImageSliderState();
 }
@@ -37,7 +38,13 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
       size = imageSize.accommodationSize;
     }
 
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(multiply05(defaultSize)),
+        ),
+      ),
+      clipBehavior: Clip.hardEdge,
       height: multiplyFree(defaultSize, MungroadImageSize.multiplyValue),
       child: Stack(
         children: [
@@ -88,16 +95,28 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
               ),
             ),
           ),
-          Positioned(
-            bottom: multiplyFree(defaultSize, 1),
-            right: multiplyFree(defaultSize, 1),
-            child: TextButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                MungroadDailog.openDialogSlider(widget.images);
-              },
-            ),
-          ),
+          widget.useFullScreen
+              ? Positioned(
+                  bottom: multiplyFree(defaultSize, 1),
+                  right: multiplyFree(defaultSize, 1),
+                  child: TextButton(
+                    child: const Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      MungroadDailog.openDialogSlider(
+                        ContainerImageSlider(
+                          targetId: widget.targetId,
+                          images: widget.images,
+                          category: widget.category,
+                          useFullScreen: false,
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

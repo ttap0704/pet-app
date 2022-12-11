@@ -99,8 +99,6 @@ class MungroadTools {
     List<String> splitedFileName = fileName.split('.');
     String finalFileName = '${splitedFileName[0]}_$size.jpg';
 
-    print('$targetPath : targetPath, $id: id');
-
     String imagePath =
         '$imageServerName/resize-image/$typeEng/$targetPath/$id/$finalFileName';
 

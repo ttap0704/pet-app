@@ -56,7 +56,6 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
 
         if (loginResult['pass'] == true) {
           final info = loginResult['user'];
-          print(info);
           MungroadDailog.openDialogAlert(
             '${info['nickname']}님 환영합니다!',
             () {
