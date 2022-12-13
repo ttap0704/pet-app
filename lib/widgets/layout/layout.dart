@@ -17,6 +17,7 @@ class Layout extends ConsumerStatefulWidget {
     required this.useBackButton,
     required this.useFloatingButton,
     required this.child,
+    required this.useNavBar,
     this.floatingButtonActionWidget,
   }) : super(key: key);
 
@@ -25,6 +26,7 @@ class Layout extends ConsumerStatefulWidget {
   final bool useFloatingButton;
   final Widget child;
   final Widget? floatingButtonActionWidget;
+  final bool useNavBar;
 
   @override
   LayoutState createState() => LayoutState();
@@ -57,7 +59,12 @@ class LayoutState extends ConsumerState<Layout> {
         useBackButton: widget.useBackButton,
       ),
       body: widget.child,
-      bottomNavigationBar: const CustomBottomNavigation(),
+      bottomNavigationBar: widget.useNavBar
+          ? const CustomBottomNavigation()
+          : const SizedBox(
+              width: 0,
+              height: 0,
+            ),
     );
   }
 }

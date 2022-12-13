@@ -61,6 +61,7 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
       child: _defaultList[commonWatch.tabNumber]['widget'],
       useFloatingButton: _defaultList[commonWatch.tabNumber]
           ['useFloatingButton'],
+      useNavBar: true,
     );
   }
 }

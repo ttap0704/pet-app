@@ -35,7 +35,9 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
     if (widget.category == accommodationTypeNumber) {
       size = imageSize.accommodationSize;
     } else if (widget.category == restaurantTypeNumber) {
-      size = imageSize.accommodationSize;
+      size = imageSize.restaurantSize;
+    } else if (widget.category == roomsTypeNumber) {
+      size = imageSize.roomsSize;
     }
 
     return Container(

@@ -186,7 +186,6 @@ class DailyContents extends StatelessWidget {
       ),
     ];
     if (daily.imageCount + 2 > 0) {
-      final double previewImageWidth = multiplyFree(defaultSize, 15);
       dailyContentsColumn.add(
         Container(
           width: multiplyFree(defaultSize, 30),

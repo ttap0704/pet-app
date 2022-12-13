@@ -7,6 +7,8 @@ import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/widgets/container/container_product.dart';
 import 'package:pet_app/widgets/layout/layout.dart';
 import 'package:pet_app/widgets/layout/layout_contents.dart';
+import 'package:pet_app/widgets/list/list_rooms.dart';
+import 'package:pet_app/widgets/tabs/tabs_bar.dart';
 
 class AccommodationDetail extends ConsumerStatefulWidget {
   const AccommodationDetail({
@@ -48,21 +50,32 @@ class AccommodationDetailState extends ConsumerState<AccommodationDetail> {
             title: 'test',
             useFloatingButton: false,
             useBackButton: true,
+            useNavBar: false,
             child: LayoutContents(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: multiply14(defaultSize),
-                  horizontal: multiply12(defaultSize),
-                ),
-                child: Column(
-                  children: [
-                    ContainerProduct(
-                      product: _accommodation.productInfo,
-                      category: accommodationTypeNumber,
-                    )
-                  ],
-                ),
-              ),
+                  height: double.infinity - 60.0,
+                  padding: EdgeInsets.symmetric(
+                    vertical: multiply14(defaultSize),
+                    horizontal: multiply12(defaultSize),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ContainerProduct(
+                          product: _accommodation.productInfo,
+                          category: accommodationTypeNumber,
+                        ),
+                        SizedBox(height: multiplyFree(defaultSize, 1)),
+                        TabsBar(items: const [
+                          '객실/위치 정보',
+                          '숙소 정보'
+                        ], widgets: [
+                          ListRooms(rooms: _accommodation.rooms),
+                          const Text('숙소')
+                        ]),
+                      ],
+                    ),
+                  )),
             ),
           )
         : Container();
