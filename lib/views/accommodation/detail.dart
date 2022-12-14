@@ -70,7 +70,10 @@ class AccommodationDetailState extends ConsumerState<AccommodationDetail> {
                           '객실/위치 정보',
                           '숙소 정보'
                         ], widgets: [
-                          ListRooms(rooms: _accommodation.rooms),
+                          ListRooms(
+                            rooms: _accommodation.rooms,
+                            seasons: _accommodation.seasons,
+                          ),
                           const Text('숙소')
                         ]),
                       ],

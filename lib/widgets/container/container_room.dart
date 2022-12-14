@@ -5,14 +5,17 @@ import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/widgets/container/container_image_slider.dart';
 import 'package:pet_app/widgets/container/container_room_image.dart';
+import 'package:pet_app/widgets/container/container_room_info.dart';
 
 class ContainerRoom extends ConsumerStatefulWidget {
   const ContainerRoom({
     Key? key,
     required this.room,
+    required this.priceKey,
   }) : super(key: key);
 
   final MungroadRoom room;
+  final String priceKey;
   @override
   ContainerRoomState createState() => ContainerRoomState();
 }
@@ -20,15 +23,13 @@ class ContainerRoom extends ConsumerStatefulWidget {
 class ContainerRoomState extends ConsumerState<ContainerRoom> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-          border: Border.all(
-        color: Colors.black12,
-        width: 1,
-      )),
-      padding: EdgeInsets.all(multiplyFree(defaultSize, 2)),
-      child: ContainerRoomImage(
+    final double width = MediaQuery.of(context).size.width;
+    final checkRow = width >= 700 ? true : false;
+
+    final double paddingValue = checkRow ? multiplyFree(defaultSize, 1) : 0;
+    Widget child;
+    List<Widget> contents = [
+      ContainerRoomImage(
         child: ContainerImageSlider(
           targetId: widget.room.id,
           images: widget.room.images,
@@ -36,6 +37,27 @@ class ContainerRoomState extends ConsumerState<ContainerRoom> {
           useFullScreen: true,
         ),
       ),
+      SizedBox(
+        width: multiplyFree(defaultSize, 1),
+        height: multiplyFree(defaultSize, 1),
+      ),
+      ContainerRoomInfo(room: widget.room, priceKey: widget.priceKey)
+    ];
+    if (checkRow) {
+      child = Row(children: contents);
+    } else {
+      child = Column(children: contents);
+    }
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          border: Border.all(
+        color: Colors.black12,
+        width: 1,
+      )),
+      padding: EdgeInsets.all(paddingValue),
+      child: child,
     );
   }
 }

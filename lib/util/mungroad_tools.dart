@@ -1,6 +1,8 @@
+import 'package:intl/intl.dart';
 import 'package:pet_app/classes/mungroad_accommodation.dart';
 import 'package:pet_app/classes/mungroad_daily.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
+import 'package:pet_app/classes/mungroad_peak_season.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/classes/mungroad_room.dart';
 import 'package:pet_app/constant.dart';
@@ -132,6 +134,50 @@ class MungroadTools {
     return currentWriteDate;
   }
 
+  static String getPriceKey(List<MungroadPeakSeason> seasons) {
+    String key = '';
+    bool res = false;
+    String compareDate = DateFormat('1001-MM-dd').format(DateTime.now());
+    for (int i = 0, leng = seasons.length; i < leng; i++) {
+      MungroadPeakSeason currentSeason = seasons[i];
+      String start = currentSeason.start;
+      String end = currentSeason.end;
+      if (DateTime.parse('1001-$start').millisecondsSinceEpoch <
+          DateTime.parse('1001-$end').millisecondsSinceEpoch) {
+        start = '1001-$start';
+        end = '1001-$end';
+      } else {
+        start = '1000-$start';
+        end = '1001-$end';
+      }
+
+      if (DateTime.parse(start).millisecondsSinceEpoch <=
+              DateTime.parse(compareDate).millisecondsSinceEpoch &&
+          DateTime.parse(end).millisecondsSinceEpoch >=
+              DateTime.parse(compareDate).millisecondsSinceEpoch) {
+        res = true;
+        break;
+      }
+    }
+
+    int day = DateTime.now().weekday;
+    if (res) {
+      if ([6, 7].contains(day)) {
+        key = 'peak_weekend_price';
+      } else {
+        key = 'peak_price';
+      }
+    } else {
+      if ([6, 7].contains(day)) {
+        key = 'normal_weekend_price';
+      } else {
+        key = 'normal_price';
+      }
+    }
+
+    return key;
+  }
+
   static Future<MungroadAccommodation> getAccommodationDetail(int id) async {
     final result = await HttpApi.getApi('/accommodation/$id');
     final List<MungroadImage> productImages =
@@ -178,6 +224,21 @@ class MungroadTools {
       rooms.add(tmpRoom);
     }
 
-    return MungroadAccommodation(product, rooms);
+    List<MungroadPeakSeason> seasons = [];
+    for (int i = 0, leng = result['accommodation_peak_season'].length;
+        i < leng;
+        i++) {
+      final currentSeason = result['accommodation_peak_season'][i];
+
+      seasons.add(MungroadPeakSeason(
+          currentSeason['id'], currentSeason['end'], currentSeason['start']));
+    }
+
+    return MungroadAccommodation(product, rooms, seasons);
+  }
+
+  static setPriceFormat(int price) {
+    NumberFormat format = NumberFormat.currency(locale: 'ko_KR', symbol: '');
+    return format.format(price);
   }
 }

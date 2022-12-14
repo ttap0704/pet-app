@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pet_app/classes/mungroad_image_size.dart';
 import 'package:pet_app/styles.dart';
 
 class ContainerRoomImage extends StatelessWidget {
@@ -9,10 +10,14 @@ class ContainerRoomImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
+    final double maxWidth = width >= 700
+        ? multiplyFree(defaultSize, 23)
+        : width - multiplyFree(defaultSize, 2);
+
     return Container(
       alignment: Alignment.center,
-      width: multiplyFree(defaultSize, 23),
-      height: 30,
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      height: multiplyFree(defaultSize, MungroadImageSize.multiplyRoomsValue),
       child: child,
     );
   }
