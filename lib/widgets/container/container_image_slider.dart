@@ -31,6 +31,9 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
   final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final bool setBorder =
+        widget.category == roomsTypeNumber && width < 700 ? false : true;
     int size = 0;
     if (widget.category == accommodationTypeNumber) {
       size = imageSize.accommodationSize;
@@ -43,7 +46,7 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
-          Radius.circular(multiply05(defaultSize)),
+          Radius.circular(setBorder ? multiply05(defaultSize) : 0),
         ),
       ),
       clipBehavior: Clip.hardEdge,

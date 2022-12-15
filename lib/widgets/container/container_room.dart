@@ -28,34 +28,51 @@ class ContainerRoomState extends ConsumerState<ContainerRoom> {
 
     final double paddingValue = checkRow ? multiplyFree(defaultSize, 1) : 0;
     Widget child;
-    List<Widget> contents = [
-      ContainerRoomImage(
-        child: ContainerImageSlider(
-          targetId: widget.room.id,
-          images: widget.room.images,
-          category: roomsTypeNumber,
-          useFullScreen: true,
-        ),
-      ),
-      SizedBox(
-        width: multiplyFree(defaultSize, 1),
-        height: multiplyFree(defaultSize, 1),
-      ),
-      ContainerRoomInfo(room: widget.room, priceKey: widget.priceKey)
-    ];
+
     if (checkRow) {
-      child = Row(children: contents);
+      List<Widget> contents = [
+        ContainerRoomImage(
+          child: ContainerImageSlider(
+            targetId: widget.room.id,
+            images: widget.room.images,
+            category: roomsTypeNumber,
+            useFullScreen: true,
+          ),
+        ),
+        SizedBox(
+          width: multiplyFree(defaultSize, 1),
+        ),
+        ContainerRoomInfo(room: widget.room, priceKey: widget.priceKey)
+      ];
+      child = Row(
+        children: contents,
+      );
     } else {
+      List<Widget> contents = [
+        ContainerRoomImage(
+          child: ContainerImageSlider(
+            targetId: widget.room.id,
+            images: widget.room.images,
+            category: roomsTypeNumber,
+            useFullScreen: true,
+          ),
+        ),
+        ContainerRoomInfo(room: widget.room, priceKey: widget.priceKey)
+      ];
       child = Column(children: contents);
     }
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          border: Border.all(
-        color: Colors.black12,
-        width: 1,
-      )),
+        border: Border.all(
+          color: Colors.black12,
+          width: 1,
+        ),
+      ),
+      margin: EdgeInsets.only(
+        bottom: multiply15(defaultSize),
+      ),
       padding: EdgeInsets.all(paddingValue),
       child: child,
     );
