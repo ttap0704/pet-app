@@ -10,13 +10,14 @@ class ContentsTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        bottom: multiply05(defaultSize),
+        bottom: multiplyFree(defaultSize, 1),
       ),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w600,
+          fontSize: multiply11(defaultSize),
         ),
       ),
     );

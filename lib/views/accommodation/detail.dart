@@ -6,6 +6,7 @@ import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/widgets/container/container_product.dart';
 import 'package:pet_app/widgets/layout/layout.dart';
+import 'package:pet_app/widgets/layout/layout_accommodation_info.dart';
 import 'package:pet_app/widgets/layout/layout_contents.dart';
 import 'package:pet_app/widgets/list/list_rooms.dart';
 import 'package:pet_app/widgets/tabs/tabs_bar.dart';
@@ -74,7 +75,7 @@ class AccommodationDetailState extends ConsumerState<AccommodationDetail> {
                             rooms: _accommodation.rooms,
                             seasons: _accommodation.seasons,
                           ),
-                          const Text('숙소')
+                          LayoutAccommodationInfo(product: _accommodation),
                         ]),
                       ],
                     ),
