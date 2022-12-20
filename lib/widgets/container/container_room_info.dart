@@ -70,7 +70,7 @@ class ContainerRoomInfoState extends ConsumerState<ContainerRoomInfo> {
       color: Colors.black54,
     );
     final TextStyle labelStyle = TextStyle(
-      fontSize: multiply11(defaultSize),
+      fontSize: multiplyFree(defaultSize, 1),
       fontWeight: FontWeight.w600,
       color: Colors.black,
     );
@@ -78,7 +78,7 @@ class ContainerRoomInfoState extends ConsumerState<ContainerRoomInfo> {
     final Widget contents = Container(
       height: checkRow
           ? multiplyFree(defaultSize, MungroadImageSize.multiplyRoomsValue)
-          : multiplyFree(defaultSize, 12),
+          : multiplyFree(defaultSize, 16),
       padding: EdgeInsets.symmetric(horizontal: multiplyFree(defaultSize, 1)),
       child: Column(
         children: [
@@ -93,8 +93,8 @@ class ContainerRoomInfoState extends ConsumerState<ContainerRoomInfo> {
                 ),
               ),
               padding: EdgeInsets.only(
-                top: checkRow ? 0 : multiply05(defaultSize),
-                bottom: multiply05(defaultSize),
+                top: checkRow ? 0 : multiplyFree(defaultSize, 1),
+                bottom: multiplyFree(defaultSize, 1),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +127,6 @@ class ContainerRoomInfoState extends ConsumerState<ContainerRoomInfo> {
             child: Container(
               padding: EdgeInsets.only(
                 top: multiply15(defaultSize),
-                bottom: multiplyFree(defaultSize, 1),
               ),
               child: Row(
                 children: [
@@ -151,7 +150,7 @@ class ContainerRoomInfoState extends ConsumerState<ContainerRoomInfo> {
                     width: 1,
                     color: Colors.black12,
                     margin: EdgeInsets.symmetric(
-                      horizontal: multiply05(defaultSize),
+                      horizontal: multiply15(defaultSize),
                     ),
                   ),
                   Expanded(
@@ -174,6 +173,27 @@ class ContainerRoomInfoState extends ConsumerState<ContainerRoomInfo> {
               ),
             ),
           ),
+          SizedBox(
+            height: multiplyFree(defaultSize, 1),
+          ),
+          Container(
+            height: multiplyFree(defaultSize, checkRow ? 2.5 : 3),
+            width: double.infinity,
+            margin: EdgeInsets.only(
+              bottom: checkRow ? 0 : multiplyFree(defaultSize, 1),
+            ),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                '예약',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: multiplyFree(defaultSize, 1),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

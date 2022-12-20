@@ -53,14 +53,14 @@ class TableInfoState extends ConsumerState<TableInfo> {
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: <TableRow>[
         TableRow(
-          // decoration: BoxDecoration(
-          //   color: Colors.black,
-          //   borderRadius: BorderRadius.vertical(
-          //     top: BorderRadius.circular(
-          //       multiply05(defaultSize),
-          //     ),
-          //   ),
-          // ),
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(
+                multiply05(defaultSize),
+              ),
+            ),
+          ),
           children: <Widget>[
             ...widget.keys.map((entry) {
               return TableCell(

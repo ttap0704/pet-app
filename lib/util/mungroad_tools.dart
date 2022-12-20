@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:pet_app/classes/mungroad_accommodation.dart';
+import 'package:pet_app/classes/mungroad_accommodation_price.dart';
 import 'package:pet_app/classes/mungroad_daily.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/classes/mungroad_peak_season.dart';
@@ -201,6 +202,16 @@ class MungroadTools {
     );
 
     final List<MungroadRoom> rooms = [];
+    Map<String, int> priceInfo = {
+      'minNormalPrice': 0,
+      'maxNormalPrice': 0,
+      'minNormalWeekendPrice': 0,
+      'maxNormalWeekendPrice': 0,
+      'minPeakPrice': 0,
+      'maxPeakPrice': 0,
+      'minPeakWeekendPrice': 0,
+      'maxPeakWeekendPrice': 0,
+    };
     for (int i = 0, leng = result['accommodation_rooms'].length;
         i < leng;
         i++) {
@@ -222,7 +233,56 @@ class MungroadTools {
         currentRoom['maximum_num'],
       );
       rooms.add(tmpRoom);
+      if (i == 0) {
+        priceInfo['minNormalPrice'] = currentRoom['normal_price'];
+        priceInfo['minNormalWeekendPrice'] =
+            currentRoom['normal_weekend_price'];
+        priceInfo['minPeakPrice'] = currentRoom['peak_price'];
+        priceInfo['minPeakWeekendPrice'] = currentRoom['peak_weekend_price'];
+      }
+
+      if (priceInfo['minNormalPrice']! > currentRoom['normal_price']) {
+        priceInfo['minNormalPrice'] = currentRoom['normal_price'];
+      }
+      if (priceInfo['maxNormalPrice']! < currentRoom['normal_price']) {
+        priceInfo['maxNormalPrice'] = currentRoom['normal_price'];
+      }
+      if (priceInfo['minNormalWeekendPrice']! >
+          currentRoom['normal_weekend_price']) {
+        priceInfo['minNormalWeekendPrice'] =
+            currentRoom['normal_weekend_price'];
+      }
+      if (priceInfo['maxNormalWeekendPrice']! <
+          currentRoom['normal_weekend_price']) {
+        priceInfo['maxNormalWeekendPrice'] =
+            currentRoom['normal_weekend_price'];
+      }
+      if (priceInfo['minPeakPrice']! > currentRoom['peak_price']) {
+        priceInfo['minPeakPrice'] = currentRoom['peak_price'];
+      }
+      if (priceInfo['maxPeakPrice']! < currentRoom['peak_price']) {
+        priceInfo['maxPeakPrice'] = currentRoom['peak_price'];
+      }
+      if (priceInfo['minPeakWeekendPrice']! >
+          currentRoom['peak_weekend_price']) {
+        priceInfo['minPeakWeekendPrice'] = currentRoom['peak_weekend_price'];
+      }
+      if (priceInfo['maxPeakWeekendPrice']! <
+          currentRoom['peak_weekend_price']) {
+        priceInfo['maxPeakWeekendPrice'] = currentRoom['peak_weekend_price'];
+      }
     }
+
+    MungroadAccommodationPrice maxPriceInfo = MungroadAccommodationPrice(
+      priceInfo['minNormalPrice']!,
+      priceInfo['maxNormalPrice']!,
+      priceInfo['minNormalWeekendPrice']!,
+      priceInfo['maxNormalWeekendPrice']!,
+      priceInfo['minPeakPrice']!,
+      priceInfo['maxPeakPrice']!,
+      priceInfo['minPeakWeekendPrice']!,
+      priceInfo['maxPeakWeekendPrice']!,
+    );
 
     List<MungroadPeakSeason> seasons = [];
     for (int i = 0, leng = result['accommodation_peak_season'].length;
@@ -234,7 +294,7 @@ class MungroadTools {
           currentSeason['id'], currentSeason['end'], currentSeason['start']));
     }
 
-    return MungroadAccommodation(product, rooms, seasons);
+    return MungroadAccommodation(product, maxPriceInfo, rooms, seasons);
   }
 
   static setPriceFormat(int price) {

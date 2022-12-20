@@ -25,16 +25,16 @@ class MungroadImageSize {
       multiplyRoomsValue = 20;
     } else if (width < 500 && width >= 400) {
       multiplyValue = 18;
-      multiplyRoomsValue = 17;
+      multiplyRoomsValue = 18;
     } else if (width < 400 && width >= 300) {
       multiplyValue = 16;
-      multiplyRoomsValue = 15;
+      multiplyRoomsValue = 16;
     } else if (width < 300) {
       multiplyValue = 13;
-      multiplyRoomsValue = 12;
+      multiplyRoomsValue = 13;
     } else {
       multiplyValue = 23;
-      multiplyRoomsValue = 12;
+      multiplyRoomsValue = 13;
     }
   }
 
