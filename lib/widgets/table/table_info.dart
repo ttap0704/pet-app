@@ -29,7 +29,6 @@ class TableInfoState extends ConsumerState<TableInfo> {
         tmpWidthMap[i] = const FlexColumnWidth();
       }
 
-      print(tmpWidthMap);
       setState(() {
         _tableColumnWidth = tmpWidthMap;
       });

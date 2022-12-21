@@ -41,6 +41,8 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
       size = imageSize.restaurantSize;
     } else if (widget.category == roomsTypeNumber) {
       size = imageSize.roomsSize;
+    } else if (widget.category == exposureMenuTypeNumber) {
+      size = imageSize.exposureMenuSize;
     }
 
     return Container(
@@ -61,6 +63,7 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
               scrollDirection: Axis.horizontal,
               enlargeCenterPage: false,
               viewportFraction: 1.0,
+              enableInfiniteScroll: widget.images.length == 1 ? false : true,
               onPageChanged: (int index, CarouselPageChangedReason reason) {
                 setState(() {
                   _currentImageNumber = index + 1;
@@ -89,17 +92,19 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
               );
             }).toList(),
           ),
-          Positioned(
-            top: multiplyFree(defaultSize, 1),
-            right: multiplyFree(defaultSize, 1),
-            child: Text(
-              '$_currentImageNumber / ${widget.images.length + 1}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: multiplyFree(defaultSize, 1),
-              ),
-            ),
-          ),
+          widget.images.length > 1
+              ? Positioned(
+                  top: multiplyFree(defaultSize, 1),
+                  right: multiplyFree(defaultSize, 1),
+                  child: Text(
+                    '$_currentImageNumber / ${widget.images.length}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: multiplyFree(defaultSize, 1),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
           widget.useFullScreen
               ? Positioned(
                   bottom: multiplyFree(defaultSize, 1),

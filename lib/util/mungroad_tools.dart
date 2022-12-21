@@ -2,10 +2,14 @@ import 'package:intl/intl.dart';
 import 'package:pet_app/classes/mungroad_accommodation.dart';
 import 'package:pet_app/classes/mungroad_accommodation_price.dart';
 import 'package:pet_app/classes/mungroad_daily.dart';
+import 'package:pet_app/classes/mungroad_entire_menu.dart';
+import 'package:pet_app/classes/mungroad_entire_menu_category.dart';
+import 'package:pet_app/classes/mungroad_exposure_menu.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/classes/mungroad_peak_season.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/classes/mungroad_room.dart';
+import 'package:pet_app/classes/mungroad_restaurant.dart';
 import 'package:pet_app/constant.dart';
 import 'package:pet_app/http.dart';
 
@@ -295,6 +299,71 @@ class MungroadTools {
     }
 
     return MungroadAccommodation(product, maxPriceInfo, rooms, seasons);
+  }
+
+  static Future<MungroadRestaurant> getRestaurantDetail(int id) async {
+    final result = await HttpApi.getApi('/restaurant/$id');
+    final List<MungroadImage> productImages =
+        setImageList(result['restaurant_images']);
+    final product = MungroadProduct(
+      productImages,
+      result['id'],
+      result['bname'],
+      result['detail_address'],
+      result['label'],
+      result['type'],
+      result['sido'],
+      result['sigungu'],
+      result['zonecode'],
+      result['road_address'],
+      result['introduction'],
+      result['building_name'],
+      result['contact'],
+      result['site'],
+      result['kakao_chat'],
+    );
+
+    List<MungroadExposureMenu> exposureMenu = [];
+    for (int i = 0, leng = result['exposure_menu'].length; i < leng; i++) {
+      final currentExposureMenu = result['exposure_menu'][i];
+
+      final List<MungroadImage> exposureMenuImages =
+          setImageList([currentExposureMenu['exposure_menu_image']]);
+
+      exposureMenu.add(MungroadExposureMenu(
+        currentExposureMenu['id'],
+        currentExposureMenu['label'],
+        currentExposureMenu['price'],
+        currentExposureMenu['comment'],
+        exposureMenuImages,
+      ));
+    }
+
+    List<MungroadEntireMenuCategory> category = [];
+    for (int i = 0, leng = result['entire_menu_category'].length;
+        i < leng;
+        i++) {
+      final currentCategory = result['entire_menu_category'][i];
+
+      List<MungroadEntireMenu> menu = [];
+      for (int y = 0, yleng = currentCategory['menu'].length; y < yleng; y++) {
+        final currentEntireMenu = currentCategory['menu'][y];
+
+        menu.add(MungroadEntireMenu(
+          currentEntireMenu['id'],
+          currentEntireMenu['label'],
+          currentEntireMenu['price'],
+        ));
+      }
+
+      category.add(MungroadEntireMenuCategory(
+        currentCategory['id'],
+        currentCategory['category'],
+        menu,
+      ));
+    }
+
+    return MungroadRestaurant(product, exposureMenu, category);
   }
 
   static setPriceFormat(int price) {

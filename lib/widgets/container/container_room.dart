@@ -27,7 +27,6 @@ class ContainerRoomState extends ConsumerState<ContainerRoom> {
     final checkRow = width >= 700 ? true : false;
 
     final double paddingValue = checkRow ? multiplyFree(defaultSize, 1) : 0;
-    print(paddingValue);
     Widget child;
 
     if (checkRow) {

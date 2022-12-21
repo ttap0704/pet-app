@@ -54,32 +54,33 @@ class AccommodationDetailState extends ConsumerState<AccommodationDetail> {
             useNavBar: false,
             child: LayoutContents(
               child: Container(
-                  height: double.infinity - 60.0,
-                  padding: EdgeInsets.symmetric(
-                    vertical: multiply14(defaultSize),
-                    horizontal: multiply12(defaultSize),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ContainerProduct(
-                          product: _accommodation.productInfo,
-                          category: accommodationTypeNumber,
+                height: double.infinity - 60.0,
+                padding: EdgeInsets.symmetric(
+                  vertical: multiply14(defaultSize),
+                  horizontal: multiply12(defaultSize),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ContainerProduct(
+                        product: _accommodation.productInfo,
+                        category: accommodationTypeNumber,
+                      ),
+                      SizedBox(height: multiplyFree(defaultSize, 1)),
+                      TabsBar(items: const [
+                        '객실/위치 정보',
+                        '숙소 정보'
+                      ], widgets: [
+                        ListRooms(
+                          rooms: _accommodation.rooms,
+                          seasons: _accommodation.seasons,
                         ),
-                        SizedBox(height: multiplyFree(defaultSize, 1)),
-                        TabsBar(items: const [
-                          '객실/위치 정보',
-                          '숙소 정보'
-                        ], widgets: [
-                          ListRooms(
-                            rooms: _accommodation.rooms,
-                            seasons: _accommodation.seasons,
-                          ),
-                          LayoutAccommodationInfo(product: _accommodation),
-                        ]),
-                      ],
-                    ),
-                  )),
+                        LayoutAccommodationInfo(product: _accommodation),
+                      ]),
+                    ],
+                  ),
+                ),
+              ),
             ),
           )
         : Container();

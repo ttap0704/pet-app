@@ -7,6 +7,7 @@ import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_scroll_controller.dart';
 import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/views/accommodation/detail.dart';
+import 'package:pet_app/views/restaurant/detail.dart';
 
 import '../container/container_preview.dart';
 
@@ -78,14 +79,17 @@ class ListProductState extends ConsumerState<ListProduct> {
 
   void moveProductDetail(int id) {
     if (widget.productType == 1) {
-      print('$id, ${widget.productType}');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RestaurantDetail(id: id),
+        ),
+      );
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AccommodationDetail(
-            id: id,
-          ),
+          builder: (context) => AccommodationDetail(id: id),
         ),
       );
     }

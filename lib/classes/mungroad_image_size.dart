@@ -3,6 +3,7 @@ class MungroadImageSize {
   late int accommodationSize = 1024;
   late int restaurantSize = 1024;
   late int roomsSize = 512;
+  late int exposureMenuSize = 512;
   static double multiplyValue = 23;
   static double multiplyRoomsValue = 12;
   static int profileSize = 512;
