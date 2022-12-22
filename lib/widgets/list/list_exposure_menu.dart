@@ -42,14 +42,14 @@ class ListExposureMenuState extends ConsumerState<ListExposureMenu> {
                       targetId: entry.id,
                       images: entry.images,
                       category: exposureMenuTypeNumber,
-                      useFullScreen: true,
+                      useFullScreen: false,
                     ),
                     Positioned(
                       bottom: multiplyFree(defaultSize, 1),
                       right: multiplyFree(defaultSize, 1),
                       child: Text(
                         entry.comment,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ],

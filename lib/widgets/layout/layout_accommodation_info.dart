@@ -5,6 +5,7 @@ import 'package:pet_app/classes/mungroad_peak_season.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/widgets/common/contents_title.dart';
+import 'package:pet_app/widgets/container/container_intro.dart';
 import 'package:pet_app/widgets/table/table_info.dart';
 
 class LayoutAccommodationInfo extends ConsumerStatefulWidget {
@@ -51,31 +52,7 @@ class LayoutAccommodationInfoState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const ContentsTitle(title: '이용 안내'),
-          Container(
-            width: double.infinity,
-            height: multiplyFree(defaultSize, 16),
-            padding: EdgeInsets.all(
-              multiply05(defaultSize),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black12,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  multiply05(defaultSize),
-                ),
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: Text(
-                widget.product.productInfo.introdution,
-                style: TextStyle(
-                  fontSize: multiplyFree(defaultSize, 1),
-                ),
-              ),
-            ),
-          ),
+          ContainerIntro(intro: widget.product.productInfo.introdution),
           SizedBox(height: multiplyFree(defaultSize, 1)),
           const ContentsTitle(title: '성수기 기간 및 금액'),
           TableInfo(
