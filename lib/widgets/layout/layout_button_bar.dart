@@ -94,7 +94,7 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 160,
+            height: MediaQuery.of(context).size.height - 200,
             padding: EdgeInsets.symmetric(
               horizontal: paddingValue,
             ),

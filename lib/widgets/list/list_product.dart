@@ -48,7 +48,7 @@ class ListProductState extends ConsumerState<ListProduct> {
       _listScrollController = MungroadScrollController(
         widget.productType,
         widget.baseUrl,
-        2,
+        10,
         widget.options,
       );
     });

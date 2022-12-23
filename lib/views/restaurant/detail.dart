@@ -5,6 +5,7 @@ import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/widgets/common/contents_title.dart';
+import 'package:pet_app/widgets/common/kakao_map.dart';
 import 'package:pet_app/widgets/container/container_intro.dart';
 import 'package:pet_app/widgets/container/container_product.dart';
 import 'package:pet_app/widgets/layout/layout.dart';
@@ -82,6 +83,9 @@ class RestaurantDetailState extends ConsumerState<RestaurantDetail> {
                         const ContentsTitle(title: '이용안내'),
                         ContainerIntro(
                             intro: _restaurant.productInfo.introdution),
+                        SizedBox(height: multiplyFree(defaultSize, 2)),
+                        const ContentsTitle(title: '지도'),
+                        KakaoMap(),
                       ],
                     ),
                   )),
