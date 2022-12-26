@@ -102,12 +102,14 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
         ),
         CommonInput(
           data: loginInfo[0],
+          expands: false,
         ),
         SizedBox(
           height: multiply05(defaultSize),
         ),
         CommonInput(
           data: loginInfo[1],
+          expands: false,
         ),
         SizedBox(
           height: multiplyFree(defaultSize, 1.5),

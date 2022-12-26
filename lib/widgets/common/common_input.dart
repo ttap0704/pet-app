@@ -8,9 +8,11 @@ class CommonInput extends ConsumerStatefulWidget {
   const CommonInput({
     Key? key,
     required this.data,
+    required this.expands,
   }) : super(key: key);
 
   final MungroadInputFormat data;
+  final bool expands;
 
   @override
   CommonInputState createState() => CommonInputState();
@@ -34,8 +36,9 @@ class CommonInputState extends ConsumerState<CommonInput> {
       color: Colors.black12,
     ),
   );
-  final TextStyle fieldTextStyle =
-      TextStyle(fontSize: multiplyFree(defaultSize, 1));
+  final TextStyle fieldTextStyle = TextStyle(
+    fontSize: multiplyFree(defaultSize, 1),
+  );
 
   void handleInput(String value) {
     widget.data.updateValue(value);
@@ -64,6 +67,9 @@ class CommonInputState extends ConsumerState<CommonInput> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         hintText: widget.data.hint,
       ),
+      textAlignVertical: TextAlignVertical.top,
+      expands: widget.expands,
+      maxLines: !widget.expands ? 1 : null,
       cursorColor: Colors.black12,
     );
   }

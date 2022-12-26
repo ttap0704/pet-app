@@ -85,7 +85,9 @@ class RestaurantDetailState extends ConsumerState<RestaurantDetail> {
                             intro: _restaurant.productInfo.introdution),
                         SizedBox(height: multiplyFree(defaultSize, 2)),
                         const ContentsTitle(title: '지도'),
-                        KakaoMap(),
+                        KakaoMap(
+                          address: _restaurant.productInfo.roadAddress,
+                        ),
                       ],
                     ),
                   )),

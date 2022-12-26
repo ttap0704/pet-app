@@ -4,7 +4,12 @@ import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:pet_app/styles.dart';
 
 class KakaoMap extends ConsumerStatefulWidget {
-  const KakaoMap({Key? key}) : super(key: key);
+  const KakaoMap({
+    Key? key,
+    required this.address,
+  }) : super(key: key);
+
+  final String address;
 
   @override
   KakaoMapState createState() => KakaoMapState();
