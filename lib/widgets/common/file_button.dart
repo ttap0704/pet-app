@@ -8,10 +8,12 @@ class FileButton extends ConsumerStatefulWidget {
     Key? key,
     required this.child,
     required this.images,
+    required this.onUpload,
   }) : super(key: key);
 
   final Widget child;
   final MungroadUploadImages images;
+  final Function onUpload;
 
   @override
   FileButtonState createState() => FileButtonState();
@@ -25,6 +27,7 @@ class FileButtonState extends ConsumerState<FileButton> {
 
     if (images.isNotEmpty) {
       widget.images.setImages64(images);
+      widget.onUpload();
     }
   }
 

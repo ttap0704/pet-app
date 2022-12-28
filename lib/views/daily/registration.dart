@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/classes/mungroad_input_format.dart';
+import 'package:pet_app/constant.dart';
+import 'package:pet_app/http.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/util/mungroad_upload_images.dart';
 import 'package:pet_app/widgets/common/common_input.dart';
 import 'package:pet_app/widgets/common/file_button.dart';
@@ -20,7 +23,7 @@ class DailyRegistration extends ConsumerStatefulWidget {
 }
 
 class DailyRegistrationState extends ConsumerState<DailyRegistration> {
-  final List<Widget> _imageContents = [];
+  late List<Widget> _imageContents = [];
   final MungroadInputFormat _contents = MungroadInputFormat(
     'contents',
     '',
@@ -31,12 +34,85 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
   );
 
   final MungroadUploadImages _images = MungroadUploadImages([]);
+  final double _previewSize = multiplyFree(defaultSize, 6);
 
   @override
-  void didUpdateWidget(covariant DailyRegistration oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    print(_images.images.length.toString());
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setPreview();
+  }
+
+  void setPreview() {
+    setState(() {
+      _imageContents = [
+        ..._images.imageFiles.map((entry) {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: _previewSize,
+                height: _previewSize,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(multiply05(defaultSize)),
+                  ),
+                  image: DecorationImage(
+                    image: FileImage(entry),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: multiplyFree(defaultSize, -0.5),
+                right: multiplyFree(defaultSize, -0.5),
+                child: Container(
+                  width: multiplyFree(defaultSize, 1.5),
+                  height: multiplyFree(defaultSize, 1.5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(_previewSize) / 3 * 2,
+                    ),
+                    color: Colors.red,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      _images.deleteImage(entry);
+                      setPreview();
+                    },
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: multiplyFree(defaultSize, 1),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }).toList()
+      ];
+    });
+  }
+
+  void confirmCreateDaily() {
+    if (_contents.value.length == 0) {
+      MungroadDailog.openDialogAlert('한 자 이상의 일상을 적어주세요.', null);
+    } else {
+      MungroadDailog.openDialogConfirm(
+          '일상을 등록하시겠습니까?', createDaily, ['확인', '취소']);
+    }
+  }
+
+  void createDaily() async {
+    _images.setImageFormData(dailyTypeNumber, 2, -1);
+    // Map createData = {
+    //   'contents': _contents.value,
+    //   'writer_id': 8,
+    // };
+    // final createRes = await HttpApi.postApi('/daily', createData);
+    // print(createRes);
   }
 
   @override
@@ -50,6 +126,7 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
         child: Container(
           padding: EdgeInsets.all(multiplyFree(defaultSize, 1)),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: double.infinity,
@@ -60,17 +137,23 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
                 ),
               ),
               SizedBox(height: multiplyFree(defaultSize, 1)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Wrap(
+                alignment: WrapAlignment.start,
+                runAlignment: WrapAlignment.start,
+                runSpacing: multiplyFree(defaultSize, 0.75),
+                spacing: multiply05(defaultSize),
                 children: [
                   ..._imageContents,
                   Container(
+                    width: _previewSize,
+                    height: _previewSize,
                     alignment: Alignment.center,
                     child: FileButton(
+                      onUpload: setPreview,
                       images: _images,
                       child: Container(
-                        width: multiplyFree(defaultSize, 3),
-                        height: multiplyFree(defaultSize, 3),
+                        width: _previewSize / 3 * 2,
+                        height: _previewSize / 3 * 2,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -78,12 +161,12 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
                             color: Colors.black26,
                           ),
                           borderRadius: BorderRadius.all(
-                            Radius.circular(multiplyFree(defaultSize, 1.5)),
+                            Radius.circular(_previewSize) / 3 * 2,
                           ),
                         ),
                         child: Icon(
                           Icons.add,
-                          size: multiplyFree(defaultSize, 2),
+                          size: _previewSize / 3 * 2 / 2,
                           color: Colors.black26,
                         ),
                       ),
@@ -95,11 +178,12 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: confirmCreateDaily,
                   child: Text(
                     '등록하기',
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: multiplyFree(defaultSize, 1),
                     ),
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/widgets/dialog/dialog_alert.dart';
+import 'package:pet_app/widgets/dialog/dialog_confirm.dart';
 import 'package:pet_app/widgets/dialog/dialog_slider.dart';
 
 class MungroadDialogOptions {
@@ -40,4 +41,13 @@ class MungroadDailog {
           DialogSlider(child: child),
         )
       };
+
+  static Function(String contents, Function callback, List<String> buttons)
+      openDialogConfirm =
+      (String contents, Function callback, List<String> buttons) => {
+            showCustomDialog(
+              DialogConfirm(
+                  content: contents, callback: callback, buttons: buttons),
+            )
+          };
 }

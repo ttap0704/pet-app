@@ -45,7 +45,7 @@ class DialogAlertState extends ConsumerState<DialogAlert> {
           vertical: multiplyFree(defaultSize, 2),
         ),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(75, 0, 0, 0),
+          color: const Color.fromARGB(100, 0, 0, 0),
           borderRadius: BorderRadius.all(
             Radius.circular(
               multiply09(defaultSize),
