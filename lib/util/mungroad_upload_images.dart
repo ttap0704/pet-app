@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import '../constant.dart';
 import 'package:path/path.dart' as path;
+import 'package:dio/dio.dart';
 
 class MungroadUploadImages {
   List<XFile> images;
@@ -26,30 +27,39 @@ class MungroadUploadImages {
     images.removeAt(deleteIdx);
   }
 
-  void setImageFormData(
+  Future<FormData> uploadImages(
     int category,
     int targetId,
     int? parentId,
-  ) {
+  ) async {
     final String typeString = mungroadTypeEng[category]!;
+
+    List<MultipartFile> uploadList = [];
     if (typeString.isNotEmpty) {
       for (int i = 0, leng = imageFiles.length; i < leng; i++) {
         final File currentFile = imageFiles[i];
+        final XFile currentXFile = images[i];
         final String extention = path.extension(currentFile.path);
         int nowDateTime = DateTime.now().millisecondsSinceEpoch;
         String fileName = '';
         if (['accommodation', 'restaurant', 'notice', 'daily', 'profile']
             .contains(typeString)) {
-          fileName =
-              '${typeString}_${targetId}_${i}_${nowDateTime}.${extention}';
+          fileName = '${typeString}_${targetId}_${i}_$nowDateTime.$extention';
         } else if (['rooms', 'exposure_menu'].contains(typeString)) {
           fileName =
-              '${typeString}_${parentId}_${targetId}_${i}_${nowDateTime}.${extention}';
+              '${typeString}_${parentId}_${targetId}_${i}_$nowDateTime.$extention';
         }
 
-        print(fileName);
+        uploadList.add(
+          await MultipartFile.fromFile(currentXFile.path, filename: fileName),
+        );
       }
     }
+    return FormData.fromMap({
+      'category': category.toString(),
+      'length': uploadList.length.toString(),
+      'files': uploadList,
+    });
   }
 
   MungroadUploadImages(this.images);

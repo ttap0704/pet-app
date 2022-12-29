@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -106,7 +107,9 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
   }
 
   void createDaily() async {
-    _images.setImageFormData(dailyTypeNumber, 2, -1);
+    FormData formData = await _images.uploadImages(dailyTypeNumber, 2, -1);
+    final createImageRes = await HttpApi.postImages('/upload/image', formData);
+    print(createImageRes);
     // Map createData = {
     //   'contents': _contents.value,
     //   'writer_id': 8,
