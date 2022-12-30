@@ -80,6 +80,7 @@ class ContainerPreview extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+              SizedBox(height: multiply05(defaultSize)),
               Text(
                 address,
                 style: TextStyle(

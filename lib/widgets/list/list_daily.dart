@@ -215,16 +215,6 @@ class DailyContents extends StatelessWidget {
                 }
 
                 Widget plusContents = Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(25, 0, 0, 0),
-                        Color.fromARGB(25, 0, 0, 0),
-                      ],
-                    ),
-                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,7 +247,11 @@ class DailyContents extends StatelessWidget {
                     child: plusContents,
                   ),
                 );
-              })
+              }),
+              Flexible(
+                flex: daily.imageList.length == 1 ? 1 : 0,
+                child: SizedBox(),
+              )
             ].toList(),
           ),
         ),

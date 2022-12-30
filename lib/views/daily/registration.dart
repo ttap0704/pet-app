@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/classes/mungroad_input_format.dart';
 import 'package:pet_app/constant.dart';
 import 'package:pet_app/http.dart';
+import 'package:pet_app/store/user.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/util/mungroad_upload_images.dart';
@@ -107,15 +108,17 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
   }
 
   void createDaily() async {
-    FormData formData = await _images.uploadImages(dailyTypeNumber, 2, -1);
+    final userWatch = ref.watch(userProvider);
+    Map createData = {
+      'contents': _contents.value,
+      'writer_id': userWatch.id,
+    };
+    final createRes = await HttpApi.postApi('/daily', createData);
+    FormData formData = await _images.uploadImages(50, createRes['id'], -1);
     final createImageRes = await HttpApi.postImages('/upload/image', formData);
-    print(createImageRes);
-    // Map createData = {
-    //   'contents': _contents.value,
-    //   'writer_id': 8,
-    // };
-    // final createRes = await HttpApi.postApi('/daily', createData);
-    // print(createRes);
+    MungroadDailog.openDialogAlert('일상이 성공적으로 공유되었습니다!', () {
+      Navigator.pop(context);
+    });
   }
 
   @override

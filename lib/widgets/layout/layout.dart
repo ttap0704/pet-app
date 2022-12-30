@@ -50,21 +50,26 @@ class LayoutState extends ConsumerState<Layout> {
       defaultSize = 16;
     }
 
-    return Scaffold(
-      floatingActionButton: widget.useFloatingButton
-          ? const CustomFloatingButton()
-          : const SizedBox(width: 0, height: 0),
-      appBar: CustomAppBar(
-        title: widget.title,
-        useBackButton: widget.useBackButton,
+    return WillPopScope(
+      child: Scaffold(
+        floatingActionButton: widget.useFloatingButton
+            ? const CustomFloatingButton()
+            : const SizedBox(width: 0, height: 0),
+        appBar: CustomAppBar(
+          title: widget.title,
+          useBackButton: widget.useBackButton,
+        ),
+        body: widget.child,
+        bottomNavigationBar: widget.useNavBar
+            ? const CustomBottomNavigation()
+            : const SizedBox(
+                width: 0,
+                height: 0,
+              ),
       ),
-      body: widget.child,
-      bottomNavigationBar: widget.useNavBar
-          ? const CustomBottomNavigation()
-          : const SizedBox(
-              width: 0,
-              height: 0,
-            ),
+      onWillPop: () async {
+        return Future.value(false);
+      },
     );
   }
 }

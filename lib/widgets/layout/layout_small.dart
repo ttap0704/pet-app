@@ -29,6 +29,7 @@ class LayoutSmallState extends ConsumerState<LayoutSmall> {
         height: double.infinity,
         padding: EdgeInsets.symmetric(
           vertical: multiplyFree(defaultSize, 3),
+          horizontal: multiplyFree(defaultSize, 1),
         ),
         child: widget.child,
       ),

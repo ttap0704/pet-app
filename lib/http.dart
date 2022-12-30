@@ -5,6 +5,8 @@ import 'package:pet_app/constant.dart';
 import 'package:dio/dio.dart';
 
 class HttpApi {
+  static Dio dio = Dio();
+
   static getApi(String url) async {
     final Uri getUrl = Uri.parse('$serverName$url');
     final result = await http.get(getUrl);
@@ -28,7 +30,6 @@ class HttpApi {
   }
 
   static postImages(String url, FormData data) async {
-    Dio dio = Dio();
     Response<dynamic> result =
         await dio.post('$serverName/upload/image', data: data);
 

@@ -59,37 +59,43 @@ class LayoutButtonBarState extends ConsumerState<LayoutButtonBar> {
             padding: EdgeInsets.symmetric(
               horizontal: paddingValue,
             ),
-            child: ButtonBar(
-              buttonHeight: multiply20(defaultSize),
-              buttonPadding: EdgeInsets.symmetric(
-                vertical: multiply09(defaultSize),
-                horizontal: multiply02(defaultSize),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ButtonBar(
+                  buttonHeight: multiply20(defaultSize),
+                  buttonPadding: EdgeInsets.symmetric(
+                    vertical: multiply09(defaultSize),
+                    horizontal: 0,
+                  ),
+                  alignment: MainAxisAlignment.start,
+                  children: [
+                    ...widget.buttonBarContents.map((entry) {
+                      int idx = widget.buttonBarContents.indexOf(entry);
+                      return TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _selectedButtonIndex = idx;
+                          });
+                          widget.onClickButton(idx);
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: MungroadColors.orange,
+                        ),
+                        child: Text(
+                          entry,
+                          style: TextStyle(
+                            color: _selectedButtonIndex == idx
+                                ? MungroadColors.orange
+                                : Colors.black54,
+                          ),
+                        ),
+                      );
+                    }).toList()
+                  ],
+                ),
               ),
-              alignment: MainAxisAlignment.start,
-              children: [
-                ...widget.buttonBarContents.map((entry) {
-                  int idx = widget.buttonBarContents.indexOf(entry);
-                  return TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _selectedButtonIndex = idx;
-                      });
-                      widget.onClickButton(idx);
-                    },
-                    style: TextButton.styleFrom(
-                      foregroundColor: MungroadColors.orange,
-                    ),
-                    child: Text(
-                      entry,
-                      style: TextStyle(
-                        color: _selectedButtonIndex == idx
-                            ? MungroadColors.orange
-                            : Colors.black54,
-                      ),
-                    ),
-                  );
-                }).toList()
-              ],
             ),
           ),
           Container(

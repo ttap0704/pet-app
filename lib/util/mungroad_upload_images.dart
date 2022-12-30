@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import '../constant.dart';
 import 'package:path/path.dart' as path;
@@ -51,7 +52,11 @@ class MungroadUploadImages {
         }
 
         uploadList.add(
-          await MultipartFile.fromFile(currentXFile.path, filename: fileName),
+          await MultipartFile.fromFile(
+            currentXFile.path,
+            filename: fileName,
+            contentType: MediaType('image', 'jpeg'),
+          ),
         );
       }
     }
