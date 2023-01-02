@@ -366,6 +366,29 @@ class MungroadTools {
     return MungroadRestaurant(product, exposureMenu, category);
   }
 
+  static Future<MungroadDaily> getDailyDetail(int id) async {
+    final result = await HttpApi.getApi('/daily/$id');
+    print(result);
+    final resultImages = result['image_list'] as List<dynamic>;
+
+    final List<MungroadImage> productImages = setImageList(resultImages);
+
+    final daily = MungroadDaily(
+      productImages,
+      result['id'],
+      0,
+      result['contents'],
+      0,
+      0,
+      result['nickname'],
+      result['profile_path'] ?? '',
+      result['writer_id'],
+      result['created_at'],
+    );
+
+    return daily;
+  }
+
   static setPriceFormat(int price) {
     NumberFormat format = NumberFormat.currency(locale: 'ko_KR', symbol: '');
     return format.format(price);
