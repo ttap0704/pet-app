@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pet_app/classes/mungroad_comment.dart';
 import 'package:pet_app/classes/mungroad_daily.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
 import 'package:pet_app/http.dart';
@@ -55,6 +56,32 @@ class MungroadScrollController extends ScrollController {
 
     final result = await HttpApi.getApi(currentUrl);
     List<MungroadDaily> currentList = await MungroadTools.makeDaily(result);
+
+    if (currentList.length < take) {
+      hasmore = false;
+    }
+
+    return currentList;
+  }
+
+  Future<List<MungroadComment>> getComments() async {
+    page = page + 1;
+    String currentUrl = '$defaultUrl?page=$page';
+
+    final result = await HttpApi.getApi(currentUrl);
+    final List<MungroadComment> currentList = [];
+    for (int i = 0, leng = result.length; i < leng; i++) {
+      final currentComment = result[i];
+      currentList.add(
+        MungroadComment(
+            currentComment['id'],
+            currentComment['comment'],
+            currentComment['nickname'],
+            currentComment['profile_path'] ?? '',
+            currentComment['writer_id'],
+            currentComment['created_at']),
+      );
+    }
 
     if (currentList.length < take) {
       hasmore = false;

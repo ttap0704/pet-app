@@ -9,10 +9,12 @@ class CommonInput extends ConsumerStatefulWidget {
     Key? key,
     required this.data,
     required this.expands,
+    this.border,
   }) : super(key: key);
 
   final MungroadInputFormat data;
   final bool expands;
+  final bool? border;
 
   @override
   CommonInputState createState() => CommonInputState();
@@ -54,9 +56,11 @@ class CommonInputState extends ConsumerState<CommonInput> {
       obscuringCharacter: '\u{2022}',
       onChanged: handleInput,
       decoration: InputDecoration(
-        border: commonBorderStyle,
-        focusedBorder: commonBorderStyle,
-        enabledBorder: commonBorderStyle,
+        border: widget.border == false ? InputBorder.none : commonBorderStyle,
+        focusedBorder:
+            widget.border == false ? InputBorder.none : commonBorderStyle,
+        enabledBorder:
+            widget.border == false ? InputBorder.none : commonBorderStyle,
         isDense: true,
         contentPadding: EdgeInsets.symmetric(
           vertical: multiplyFree(defaultSize, 1.5),
