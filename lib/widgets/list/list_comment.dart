@@ -136,7 +136,7 @@ class ListCommentState extends ConsumerState<ListComment> {
     } else {
       return Container(
         constraints: BoxConstraints(
-          maxHeight: multiplyFree(defaultSize, 20),
+          maxHeight: multiplyFree(defaultSize, 2),
         ),
         alignment: Alignment.center,
         child: Column(

@@ -6,6 +6,7 @@ import 'package:pet_app/store/user.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/util/mungroad_scroll_controller.dart';
+import 'package:pet_app/widgets/common/comment_divider.dart';
 import 'package:pet_app/widgets/common/common_input.dart';
 import 'package:pet_app/widgets/layout/layout.dart';
 import 'package:pet_app/http.dart';
@@ -85,6 +86,7 @@ class LayoutCommentState extends ConsumerState<LayoutComment> {
                   child: Column(
                     children: [
                       widget.child,
+                      const CommentDivider(),
                       ListComment(
                         category: widget.category,
                         targetId: widget.targetId,
