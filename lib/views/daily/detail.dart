@@ -56,6 +56,7 @@ class DailyDetailState extends ConsumerState<DailyDetail> {
             useBackButton: true,
             useNavBar: false,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
                   height: multiplyFree(defaultSize, 3.5),

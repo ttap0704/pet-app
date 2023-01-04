@@ -94,7 +94,7 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
   }
 
   void confirmCreateDaily() {
-    if (_contents.value.length == 0) {
+    if (_contents.value.isEmpty) {
       MungroadDailog.openDialogAlert('한 자 이상의 일상을 적어주세요.', null);
     } else {
       MungroadDailog.openDialogConfirm(

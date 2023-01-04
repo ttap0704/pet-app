@@ -14,12 +14,14 @@ class ListComment extends ConsumerStatefulWidget {
     required this.targetId,
     required this.take,
     required this.options,
+    required this.count,
   }) : super(key: key);
 
   final int category;
   final int targetId;
   final int take;
   final MungroadListOptions options;
+  final int count;
 
   @override
   ListCommentState createState() => ListCommentState();

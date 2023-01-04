@@ -47,6 +47,7 @@ class LayoutCommentState extends ConsumerState<LayoutComment> {
     '댓글을 남겨주세요!',
     0,
   );
+  int _count = 0;
 
   void createComment() async {
     final userWatch = ref.watch(userProvider);
@@ -62,6 +63,10 @@ class LayoutCommentState extends ConsumerState<LayoutComment> {
         };
         final createResult = await HttpApi.postApi('/comment', createData);
         MungroadDailog.openDialogAlert('댓글이 성공적으로 등록되었습니다!', null);
+        _contents.updateValue('');
+        setState(() {
+          _count = _count + 1;
+        });
       }
     } else {
       MungroadDailog.openDialogAlert('로그인 후 댓글을 작성해주세요.', null);
@@ -92,6 +97,7 @@ class LayoutCommentState extends ConsumerState<LayoutComment> {
                         targetId: widget.targetId,
                         take: 10,
                         options: MungroadListOptions(null, null, null),
+                        count: _count,
                       ),
                     ],
                   ),

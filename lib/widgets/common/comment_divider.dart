@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_app/classes/mungroad_colors.dart';
 import 'package:pet_app/styles.dart';
 
 class CommentDivider extends StatelessWidget {
@@ -11,7 +12,7 @@ class CommentDivider extends StatelessWidget {
       width: double.infinity,
       height: multiplyFree(defaultSize, 0.5),
       margin: EdgeInsets.symmetric(vertical: multiplyFree(defaultSize, 1)),
-      color: Colors.black12,
+      color: MungroadColors.gray,
     );
   }
 }

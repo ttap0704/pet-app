@@ -33,6 +33,18 @@ class CommonInputState extends ConsumerState<CommonInput> {
     });
   }
 
+  @override
+  void didUpdateWidget(covariant CommonInput oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (widget.data.value.isEmpty) {
+      focusNode.unfocus();
+    }
+    setState(() {
+      _inputController.text = widget.data.value;
+    });
+  }
+
   final OutlineInputBorder commonBorderStyle = const OutlineInputBorder(
     borderSide: BorderSide(
       color: Colors.black12,

@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
 import 'package:pet_app/store/user.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/views/user/info.dart';
 import 'package:pet_app/widgets/common/profile_box.dart';
 import 'package:pet_app/widgets/layout/layout_login.dart';
 import 'package:pet_app/widgets/layout/layout_small.dart';
@@ -56,6 +57,18 @@ class UserMenu extends StatelessWidget {
     ];
 
     List<String> menu = ['내 정보', '공지사항 및 이벤트', '로그아웃'];
+
+    void handleMenu(int idx) => {
+          if (idx == 0)
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UserInfo(),
+                ),
+              )
+            }
+        };
 
     return LayoutSmall(
       maxWidthValue: 30,
@@ -143,25 +156,30 @@ class UserMenu extends StatelessWidget {
                     );
                   }
                   return Expanded(
-                    child: Container(
-                      decoration: currentDecoration,
-                      child: Row(
-                        children: [
-                          Icon(
-                            currentIcon,
-                            size: smallIconSize,
-                            color: Colors.black54,
-                          ),
-                          SizedBox(width: multiply05(defaultSize)),
-                          Text(
-                            entry,
-                            style: TextStyle(
-                              fontSize: multiplyFree(defaultSize, 1),
-                              fontWeight: FontWeight.w500,
+                    child: GestureDetector(
+                      onTap: () {
+                        handleMenu(idx);
+                      },
+                      child: Container(
+                        decoration: currentDecoration,
+                        child: Row(
+                          children: [
+                            Icon(
+                              currentIcon,
+                              size: smallIconSize,
                               color: Colors.black54,
                             ),
-                          )
-                        ].toList(),
+                            SizedBox(width: multiply05(defaultSize)),
+                            Text(
+                              entry,
+                              style: TextStyle(
+                                fontSize: multiplyFree(defaultSize, 1),
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black54,
+                              ),
+                            )
+                          ].toList(),
+                        ),
                       ),
                     ),
                   );
