@@ -10,20 +10,21 @@ void main() {
     ProviderScope(
       child: MaterialApp(
         theme: ThemeData(
-            fontFamily: 'NanumSquareRound',
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: MungroadColors.orange,
+          fontFamily: 'NanumSquareRound',
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: MungroadColors.orange,
+            ),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+              foregroundColor: MungroadColors.orange,
+              side: const BorderSide(
+                color: MungroadColors.orange,
               ),
             ),
-            outlinedButtonTheme: OutlinedButtonThemeData(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: MungroadColors.orange,
-                side: const BorderSide(
-                  color: MungroadColors.orange,
-                ),
-              ),
-            )),
+          ),
+        ),
         home: const MyApp(),
       ),
     ),

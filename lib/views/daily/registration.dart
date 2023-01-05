@@ -150,6 +150,7 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
                     height: _previewSize,
                     alignment: Alignment.center,
                     child: FileButton(
+                      multi: true,
                       onUpload: setPreview,
                       images: _images,
                       child: Container(

@@ -1,6 +1,8 @@
 const String serverName = 'https://api.mungroad.com';
 const String imageServerName = 'https://cdn.mungroad.com';
 
+const int profileTypeNumber = 0;
+
 const int restaurantTypeNumber = 1;
 const int accommodationTypeNumber = 2;
 

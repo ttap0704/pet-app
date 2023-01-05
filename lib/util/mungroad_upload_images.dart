@@ -9,6 +9,11 @@ class MungroadUploadImages {
   List<XFile> images;
   late List<File> imageFiles = [];
 
+  void clearImages() async {
+    imageFiles = [];
+    images = [];
+  }
+
   void setImages64(List<XFile> currentImegas) async {
     List<File> tmpFiles = [...imageFiles];
 

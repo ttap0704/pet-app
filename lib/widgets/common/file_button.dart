@@ -9,11 +9,13 @@ class FileButton extends ConsumerStatefulWidget {
     required this.child,
     required this.images,
     required this.onUpload,
+    required this.multi,
   }) : super(key: key);
 
   final Widget child;
   final MungroadUploadImages images;
   final Function onUpload;
+  final bool multi;
 
   @override
   FileButtonState createState() => FileButtonState();
@@ -23,7 +25,17 @@ class FileButtonState extends ConsumerState<FileButton> {
   final ImagePicker _picker = ImagePicker();
 
   void getImages() async {
-    final List<XFile> images = await _picker.pickMultiImage();
+    List<XFile> images = [];
+    if (widget.multi) {
+      images = await _picker.pickMultiImage();
+    } else {
+      widget.images.clearImages();
+
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        images.add(image);
+      }
+    }
 
     if (images.isNotEmpty) {
       widget.images.setImages64(images);
