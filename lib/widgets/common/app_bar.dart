@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/store/common.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
+import 'package:pet_app/util/mungroad_dialog.dart';
 
 class CustomAppBar extends ConsumerStatefulWidget with PreferredSizeWidget {
   const CustomAppBar({
@@ -28,10 +29,33 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
 
     final bool isHome = commonWatch.tabNumber == 0 ? true : false;
     final double width = MediaQuery.of(context).size.width;
+    final bool useDialog = [1, 2].contains(commonWatch.tabNumber);
 
     double paddingValue = 0;
     if (width > 1000) {
       paddingValue = (width - 1000) / 2;
+    }
+
+    TextStyle titleStyle = TextStyle(
+      color: Colors.black,
+      fontSize: multiply20(defaultSize),
+      fontWeight: FontWeight.w700,
+    );
+    Widget titleWidget = Text(
+      widget.title,
+      style: titleStyle,
+    );
+
+    if (useDialog) {
+      titleWidget = GestureDetector(
+        onTap: () {
+          MungroadDialog.openDialogRadio(Text('hihi'));
+        },
+        child: Text(
+          'dialog',
+          style: titleStyle,
+        ),
+      );
     }
 
     return Container(
@@ -50,14 +74,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
       child: AppBar(
         leading: widget.useBackButton ? const BackButton() : null,
         centerTitle: true,
-        title: Text(
-          widget.title,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: multiply20(defaultSize),
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: titleWidget,
         backgroundColor: isHome ? MungroadColors.orange : Colors.white,
         bottomOpacity: 1,
         elevation: 0,
@@ -70,9 +87,14 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
   // Size get preferredSize => Size.fromHeight(widget.appBar.preferredSize.height);
 }
 
-class BackButton extends StatelessWidget {
+class BackButton extends StatefulWidget {
   const BackButton({Key? key}) : super(key: key);
 
+  @override
+  State<BackButton> createState() => _BackButtonState();
+}
+
+class _BackButtonState extends State<BackButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -81,7 +103,7 @@ class BackButton extends StatelessWidget {
         color: Colors.black,
       ),
       onPressed: () => {
-        Navigator.of(context).pop(),
+        Navigator.pop(context, true),
       },
     );
   }

@@ -63,11 +63,12 @@ class UserInfoState extends ConsumerState<UserInfo> {
   }
 
   void confirmSave() {
-    MungroadDailog.openDialogConfirm('정보를 저장하시겠습니까?', updateUser, ['확인', '취소']);
+    MungroadDialog.openDialogConfirm('정보를 저장하시겠습니까?', updateUser, ['확인', '취소']);
   }
 
   void updateUser() async {
     final watchUser = ref.watch(userProvider);
+    final readUser = ref.read(userProvider.notifier);
 
     Map updateData = {
       'nickname': _userInfo[1].value,
@@ -76,6 +77,8 @@ class UserInfoState extends ConsumerState<UserInfo> {
     final updateRes =
         await HttpApi.postApi('/users/${watchUser.id}/info', updateData);
 
+    readUser.setNickname(_userInfo[1].value);
+
     if (_profileFile != null) {
       final deleteRes =
           await HttpApi.postApi('/images/profile/${watchUser.id}/delete', {});
@@ -83,14 +86,17 @@ class UserInfoState extends ConsumerState<UserInfo> {
       FormData formData = await _profileImage.uploadImages(0, watchUser.id, -1);
       final createImageRes =
           await HttpApi.postImages('/upload/image', formData);
+
+      readUser.setProfile(createImageRes[0]['file_name']);
     }
 
-    MungroadDailog.openDialogAlert('정보가 저장되었습니다.', null);
+    MungroadDialog.openDialogAlert('정보가 저장되었습니다.', null);
   }
 
   @override
   Widget build(BuildContext context) {
     final watchUser = ref.watch(userProvider);
+
     return Layout(
       title: '내 정보',
       useBackButton: true,

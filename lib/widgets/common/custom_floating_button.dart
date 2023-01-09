@@ -29,7 +29,7 @@ class CustomFloatingButtonState extends ConsumerState<CustomFloatingButton> {
           ),
         );
       } else {
-        MungroadDailog.openDialogAlert('로그인 후 공유가 가능합니다.', null);
+        MungroadDialog.openDialogAlert('로그인 후 공유가 가능합니다.', null);
       }
     }
   }

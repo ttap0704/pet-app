@@ -5,6 +5,7 @@ import 'package:pet_app/classes/mungroad_image.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/widgets/dialog/dialog_alert.dart';
 import 'package:pet_app/widgets/dialog/dialog_confirm.dart';
+import 'package:pet_app/widgets/dialog/dialog_radio.dart';
 import 'package:pet_app/widgets/dialog/dialog_slider.dart';
 
 class MungroadDialogOptions {
@@ -15,7 +16,7 @@ class MungroadDialogOptions {
   );
 }
 
-class MungroadDailog {
+class MungroadDialog {
   static Function(Widget widget) showCustomDialog = (Widget widget) => {
         showAnimatedDialog(
           barrierColor: const Color.fromARGB(80, 0, 0, 0),
@@ -50,4 +51,7 @@ class MungroadDailog {
                   content: contents, callback: callback, buttons: buttons),
             )
           };
+
+  static Function(Widget child) openDialogRadio =
+      (Widget child) => {showCustomDialog(DialogRadio(child: child))};
 }

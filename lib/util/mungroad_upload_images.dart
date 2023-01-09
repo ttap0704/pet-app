@@ -50,10 +50,10 @@ class MungroadUploadImages {
         String fileName = '';
         if (['accommodation', 'restaurant', 'notice', 'daily', 'profile']
             .contains(typeString)) {
-          fileName = '${typeString}_${targetId}_${i}_$nowDateTime.$extention';
+          fileName = '${typeString}_${targetId}_${i}_$nowDateTime$extention';
         } else if (['rooms', 'exposure_menu'].contains(typeString)) {
           fileName =
-              '${typeString}_${parentId}_${targetId}_${i}_$nowDateTime.$extention';
+              '${typeString}_${parentId}_${targetId}_${i}_$nowDateTime$extention';
         }
 
         uploadList.add(

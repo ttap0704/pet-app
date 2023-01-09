@@ -53,7 +53,7 @@ class LayoutCommentState extends ConsumerState<LayoutComment> {
     final userWatch = ref.watch(userProvider);
     if (userWatch.id > 0) {
       if (_contents.value.isEmpty) {
-        MungroadDailog.openDialogAlert('한 자 이상의 댓글을 작성해주세요.', null);
+        MungroadDialog.openDialogAlert('한 자 이상의 댓글을 작성해주세요.', null);
       } else {
         Map createData = {
           'comment': _contents.value,
@@ -62,14 +62,14 @@ class LayoutCommentState extends ConsumerState<LayoutComment> {
           'category': widget.category,
         };
         final createResult = await HttpApi.postApi('/comment', createData);
-        MungroadDailog.openDialogAlert('댓글이 성공적으로 등록되었습니다!', null);
+        MungroadDialog.openDialogAlert('댓글이 성공적으로 등록되었습니다!', null);
         _contents.updateValue('');
         setState(() {
           _count = _count + 1;
         });
       }
     } else {
-      MungroadDailog.openDialogAlert('로그인 후 댓글을 작성해주세요.', null);
+      MungroadDialog.openDialogAlert('로그인 후 댓글을 작성해주세요.', null);
     }
   }
 

@@ -368,7 +368,6 @@ class MungroadTools {
 
   static Future<MungroadDaily> getDailyDetail(int id) async {
     final result = await HttpApi.getApi('/daily/$id');
-    print(result);
     final resultImages = result['image_list'] as List<dynamic>;
 
     final List<MungroadImage> productImages = setImageList(resultImages);

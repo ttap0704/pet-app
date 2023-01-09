@@ -26,7 +26,17 @@ class ProfileBoxState extends ConsumerState<ProfileBox> {
   @override
   void initState() {
     super.initState();
+    setProfilePath();
+  }
 
+  @override
+  void didUpdateWidget(covariant ProfileBox oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    setProfilePath();
+  }
+
+  void setProfilePath() {
     if (widget.profilePath.isEmpty) {
       _contentsWidget = Icon(
         Icons.pets,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
+import 'package:pet_app/store/common.dart';
 import 'package:pet_app/store/user.dart';
 import 'package:pet_app/styles.dart';
+import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/views/user/info.dart';
 import 'package:pet_app/widgets/common/profile_box.dart';
 import 'package:pet_app/widgets/layout/layout_login.dart';
@@ -26,23 +28,25 @@ class UserIndexState extends ConsumerState<UserIndex> {
         child: LayoutLogin(),
       );
     } else {
-      return UserMenu(
-        user: watchUser,
-      );
+      return const UserMenu();
     }
   }
 }
 
-class UserMenu extends StatelessWidget {
+class UserMenu extends ConsumerStatefulWidget {
   const UserMenu({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
-  final UserState user;
+  @override
+  UserMenuState createState() => UserMenuState();
+}
 
+class UserMenuState extends ConsumerState<UserMenu> {
   @override
   Widget build(BuildContext context) {
+    final watchUser = ref.watch(userProvider);
+
     double iconSize = multiplyFree(defaultSize, 3);
     double smallIconSize = multiplyFree(defaultSize, 2.2);
     List<Map> exposureMenu = [
@@ -58,17 +62,20 @@ class UserMenu extends StatelessWidget {
 
     List<String> menu = ['내 정보', '공지사항 및 이벤트', '로그아웃'];
 
-    void handleMenu(int idx) => {
-          if (idx == 0)
-            {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const UserInfo(),
-                ),
-              )
-            }
-        };
+    void handleMenu(int idx) {
+      if (idx == 0) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const UserInfo()),
+        );
+      } else if (idx == 2) {
+        final readUser = ref.read(userProvider.notifier);
+        final commonRead = ref.read(commonProvider.notifier);
+        readUser.clearUser();
+        MungroadDialog.openDialogAlert('로그아웃 되었습니다.', null);
+        commonRead.setTabNumber(0);
+      }
+    }
 
     return LayoutSmall(
       maxWidthValue: 30,
@@ -77,14 +84,14 @@ class UserMenu extends StatelessWidget {
           Row(
             children: [
               ProfileBox(
-                profilePath: user.profilePath,
+                profilePath: watchUser.profilePath,
                 size: multiplyFree(defaultSize, 4),
-                userId: user.id,
+                userId: watchUser.id,
               ),
               SizedBox(width: multiplyFree(defaultSize, 1)),
               Text(
                 // user.nickname,
-                '쪼이엉아',
+                watchUser.nickname,
                 style: TextStyle(
                   fontSize: multiply12(defaultSize),
                   fontWeight: FontWeight.w600,

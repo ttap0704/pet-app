@@ -49,14 +49,14 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
 
       if (currentLoginInfo['login_id'].toString().isEmpty ||
           currentLoginInfo['password'].toString().isEmpty) {
-        MungroadDailog.openDialogAlert('모든 정보를 입력해주세요.', null);
+        MungroadDialog.openDialogAlert('모든 정보를 입력해주세요.', null);
       } else {
         final loginResult =
             await HttpApi.postApi('/users/login', currentLoginInfo);
 
         if (loginResult['pass'] == true) {
           final info = loginResult['user'];
-          MungroadDailog.openDialogAlert(
+          MungroadDialog.openDialogAlert(
             '${info['nickname']}님 환영합니다!',
             () {
               final readUser = ref.read(userProvider.notifier);
@@ -75,9 +75,9 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
         } else {
           final String message = loginResult['message'];
           if (message == 'Wrong Password' || message == 'Wrong Email') {
-            MungroadDailog.openDialogAlert('입력하신 정보를 확인해주세요.', null);
+            MungroadDialog.openDialogAlert('입력하신 정보를 확인해주세요.', null);
           } else if (message == 'Only Kakao') {
-            MungroadDailog.openDialogAlert(
+            MungroadDialog.openDialogAlert(
               '해당 이메일은 카카오로 가입한 계정입니다.\r\n카카오 로그인을 이용해주세요.',
               null,
             );
@@ -111,16 +111,14 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
           data: loginInfo[1],
           expands: false,
         ),
-        SizedBox(
-          height: multiplyFree(defaultSize, 1.5),
-        ),
+        SizedBox(height: multiplyFree(defaultSize, 1)),
         FractionallySizedBox(
           widthFactor: 1,
           child: ElevatedButton(
             onPressed: handleLogin,
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(
-                vertical: multiply15(defaultSize),
+                vertical: multiplyFree(defaultSize, 1),
               ),
             ),
             child: Text(
@@ -129,16 +127,13 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
             ),
           ),
         ),
-        SizedBox(
-          height: multiply05(defaultSize),
-        ),
         FractionallySizedBox(
           widthFactor: 1,
           child: OutlinedButton(
             onPressed: () {},
             style: OutlinedButton.styleFrom(
               padding: EdgeInsets.symmetric(
-                vertical: multiply15(defaultSize),
+                vertical: multiplyFree(defaultSize, 1),
               ),
             ),
             child: Text('회원가입', style: buttonTextStyle),

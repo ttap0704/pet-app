@@ -115,7 +115,7 @@ class ContainerImageSliderState extends ConsumerState<ContainerImageSlider> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      MungroadDailog.openDialogSlider(
+                      MungroadDialog.openDialogSlider(
                         ContainerImageSlider(
                           targetId: widget.targetId,
                           images: widget.images,

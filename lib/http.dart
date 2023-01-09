@@ -32,7 +32,6 @@ class HttpApi {
   static postImages(String url, FormData data) async {
     Response<dynamic> result =
         await dio.post('$serverName/upload/image', data: data);
-
-    return result;
+    return result.data;
   }
 }

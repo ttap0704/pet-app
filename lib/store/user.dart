@@ -23,6 +23,30 @@ class UserState {
     );
   }
 
+  UserState setNickname({required String currentNickname}) {
+    return UserState(
+      id,
+      loginId,
+      currentNickname,
+      type,
+      certification,
+      profilePath,
+      phone,
+    );
+  }
+
+  UserState setProfile({required String currentProfile}) {
+    return UserState(
+      id,
+      loginId,
+      nickname,
+      type,
+      certification,
+      currentProfile,
+      phone,
+    );
+  }
+
   UserState(
     this.id,
     this.loginId,
@@ -37,8 +61,20 @@ class UserState {
 class UserNotifier extends StateNotifier<UserState> {
   UserNotifier() : super(UserState(0, '', '', 0, 0, '', ''));
 
+  void clearUser() {
+    state = UserState(0, '', '', 0, 0, '', '');
+  }
+
   void setUser(UserState user) {
     state = state.setUser(user: user);
+  }
+
+  void setNickname(String nickname) {
+    state = state.setNickname(currentNickname: nickname);
+  }
+
+  void setProfile(String nickName) {
+    state = state.setProfile(currentProfile: nickName);
   }
 }
 

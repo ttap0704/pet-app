@@ -95,9 +95,9 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
 
   void confirmCreateDaily() {
     if (_contents.value.isEmpty) {
-      MungroadDailog.openDialogAlert('한 자 이상의 일상을 적어주세요.', null);
+      MungroadDialog.openDialogAlert('한 자 이상의 일상을 적어주세요.', null);
     } else {
-      MungroadDailog.openDialogConfirm(
+      MungroadDialog.openDialogConfirm(
           '일상을 등록하시겠습니까?', createDaily, ['확인', '취소']);
     }
   }
@@ -111,7 +111,7 @@ class DailyRegistrationState extends ConsumerState<DailyRegistration> {
     final createRes = await HttpApi.postApi('/daily', createData);
     FormData formData = await _images.uploadImages(50, createRes['id'], -1);
     final createImageRes = await HttpApi.postImages('/upload/image', formData);
-    MungroadDailog.openDialogAlert('일상이 성공적으로 공유되었습니다!', () {
+    MungroadDialog.openDialogAlert('일상이 성공적으로 공유되었습니다!', () {
       Navigator.pop(context);
     });
   }
