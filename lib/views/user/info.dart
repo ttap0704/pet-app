@@ -90,7 +90,9 @@ class UserInfoState extends ConsumerState<UserInfo> {
       readUser.setProfile(createImageRes[0]['file_name']);
     }
 
-    MungroadDialog.openDialogAlert('정보가 저장되었습니다.', null);
+    MungroadDialog.openDialogAlert('정보가 저장되었습니다.', () {
+      Navigator.pop(context);
+    });
   }
 
   @override

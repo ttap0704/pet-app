@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_input_format.dart';
@@ -6,6 +8,7 @@ import 'package:pet_app/store/user.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_dialog.dart';
 import 'package:pet_app/widgets/common/common_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LayoutLogin extends ConsumerStatefulWidget {
   const LayoutLogin({Key? key}) : super(key: key);
@@ -58,7 +61,7 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
           final info = loginResult['user'];
           MungroadDialog.openDialogAlert(
             '${info['nickname']}님 환영합니다!',
-            () {
+            () async {
               final readUser = ref.read(userProvider.notifier);
               final UserState user = UserState(
                 info['id'],
@@ -70,6 +73,17 @@ class LayoutLoginState extends ConsumerState<LayoutLogin> {
                 info['phone'] ?? '',
               );
               readUser.setUser(user);
+
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString(
+                'user',
+                jsonEncode(
+                  {
+                    'id': loginInfo[0].value,
+                    'password': loginInfo[1].value,
+                  },
+                ),
+              );
             },
           );
         } else {

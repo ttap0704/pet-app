@@ -49,7 +49,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
     if (useDialog) {
       titleWidget = GestureDetector(
         onTap: () {
-          MungroadDialog.openDialogRadio(Text('hihi'));
+          MungroadDialog.openDialogRadio(Text('hihi'), ['test1', 'test2']);
         },
         child: Text(
           'dialog',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
 import 'package:pet_app/classes/mungroad_input_format.dart';
+import 'package:pet_app/global.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_input_controller.dart';
 
@@ -81,35 +82,42 @@ class CommonInputState extends ConsumerState<CommonInput> {
     Color backgroundColor =
         widget.readOnly == true ? MungroadColors.gray : Colors.white;
 
-    return TextField(
-      controller: _inputController,
-      style: fieldTextStyle,
-      focusNode: focusNode,
-      obscureText: widget.data.inputType == 'password' ? true : false,
-      obscuringCharacter: '\u{2022}',
-      onChanged: handleInput,
-      readOnly: widget.readOnly == true ? true : false,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: backgroundColor,
-        label: Text(widget.label ?? ''),
-        border: border,
-        focusedBorder: border,
-        enabledBorder: border,
-        isDense: true,
-        contentPadding: EdgeInsets.symmetric(
-          vertical: multiplyFree(defaultSize, 1.5),
-          horizontal: multiplyFree(defaultSize, 1),
+    return Focus(
+      onFocusChange: (bool check) {
+        if (!check) {
+          focusNode.unfocus();
+        }
+      },
+      child: TextField(
+        controller: _inputController,
+        style: fieldTextStyle,
+        focusNode: focusNode,
+        obscureText: widget.data.inputType == 'password' ? true : false,
+        obscuringCharacter: '\u{2022}',
+        onChanged: handleInput,
+        readOnly: widget.readOnly == true ? true : false,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: backgroundColor,
+          label: Text(widget.label ?? ''),
+          border: border,
+          focusedBorder: border,
+          enabledBorder: border,
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: multiplyFree(defaultSize, 1.5),
+            horizontal: multiplyFree(defaultSize, 1),
+          ),
+          labelStyle: labelTextStyle,
+          hintStyle: fieldTextStyle,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: widget.data.hint,
         ),
-        labelStyle: labelTextStyle,
-        hintStyle: fieldTextStyle,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        hintText: widget.data.hint,
+        textAlignVertical: TextAlignVertical.top,
+        expands: widget.expands,
+        maxLines: !widget.expands ? 1 : null,
+        cursorColor: Colors.black12,
       ),
-      textAlignVertical: TextAlignVertical.top,
-      expands: widget.expands,
-      maxLines: !widget.expands ? 1 : null,
-      cursorColor: Colors.black12,
     );
   }
 }

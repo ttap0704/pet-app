@@ -76,6 +76,18 @@ class UserNotifier extends StateNotifier<UserState> {
   void setProfile(String nickName) {
     state = state.setProfile(currentProfile: nickName);
   }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['id'] = state.id;
+  //   data['loginId'] = state.loginId;
+  //   data['nickname'] = state.nickname;
+  //   data['type'] = state.type;
+  //   data['certification'] = certification;
+  //   data['profilePath'] = profilePath;
+  //   data['phone'] = phone;
+  //   return data;
+  // }
 }
 
 final userProvider = StateNotifierProvider<UserNotifier, UserState>((ref) {
