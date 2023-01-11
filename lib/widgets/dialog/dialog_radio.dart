@@ -71,73 +71,55 @@ class RadioButtons extends StatefulWidget {
 
 class _RadioButtonsState extends State<RadioButtons> {
   String _selectedValue = '';
-  List<Widget> _contents = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('hihi');
-    setContents();
-  }
-
-  void setContents() {
-    List<Widget> rowChildren = [];
-    List<Widget> tmpContents = [];
-    for (int i = 0, leng = widget.values.length; i < leng; i++) {
-      String currentValue = widget.values[i];
-
-      rowChildren.add(GestureDetector(
-        onTap: () {
-          print(currentValue);
-          setState(() {
-            _selectedValue = currentValue;
-          });
-        },
-        child: Row(
-          children: [
-            _selectedValue == currentValue
-                ? const Icon(
-                    Icons.radio_button_checked,
-                    color: MungroadColors.orange,
-                  )
-                : const Icon(
-                    Icons.radio_button_unchecked,
-                    color: Colors.black12,
-                  ),
-            Text(
-              currentValue,
-              style: TextStyle(
-                fontSize: multiplyFree(defaultSize, 1.3),
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                decoration: TextDecoration.none,
-              ),
-            ),
-          ],
-        ),
-      ));
-
-      tmpContents.add(Row(
-        children: [...rowChildren],
-      ));
-      if (i % 2 == 1) {
-        rowChildren = [];
-      }
-    }
-
-    print('111');
-    print(tmpContents);
-    setState(() {
-      _contents = [...tmpContents];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: _contents,
+      padding: EdgeInsets.symmetric(vertical: multiplyFree(defaultSize, 1)),
+      child: GridView.count(
+        padding: const EdgeInsets.all(0),
+        childAspectRatio: 5,
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        crossAxisSpacing: multiplyFree(defaultSize, 1),
+        children: List.generate(widget.values.length, (index) {
+          final String entry = widget.values[index];
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              setState(() {
+                _selectedValue = entry;
+              });
+            },
+            child: SizedBox(
+              width: double.infinity / 2,
+              height: multiplyFree(defaultSize, 3),
+              child: Row(
+                children: [
+                  _selectedValue == entry
+                      ? const Icon(
+                          Icons.radio_button_checked,
+                          color: MungroadColors.orange,
+                        )
+                      : const Icon(
+                          Icons.radio_button_unchecked,
+                          color: Colors.black12,
+                        ),
+                  SizedBox(width: multiplyFree(defaultSize, 0.5)),
+                  Text(
+                    entry,
+                    style: TextStyle(
+                      fontSize: multiplyFree(defaultSize, 1.3),
+                      color: Colors.black,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
