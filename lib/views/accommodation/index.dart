@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/constant.dart';
+import 'package:pet_app/store/common.dart';
+import 'package:pet_app/util/mungroad_radio_contents.dart';
 import 'package:pet_app/util/mungroad_scroll_controller.dart';
 import 'package:pet_app/widgets/layout/layout_button_bar.dart';
 import 'package:pet_app/widgets/list/list_product.dart';
@@ -30,8 +32,22 @@ class AccommodationIndexState extends ConsumerState<AccommodationIndex> {
     });
   }
 
+  void handleOptions() {
+    final commonWatch = ref.watch(commonProvider);
+    String? location =
+        MungroadRadioContents.locationId[commonWatch.accommodationLocation];
+    if (location != _options.location) {
+      setState(() {
+        _options =
+            MungroadListOptions(_options.recent, location!, _options.types);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    handleOptions();
+
     return LayoutButtonBar(
       buttonBarContents: const ['전체', '펜션', '호텔/리조트', '캠핑/글램핑', '기타'],
       onClickButton: handleButtonBar,

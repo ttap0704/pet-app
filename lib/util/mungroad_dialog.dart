@@ -52,11 +52,14 @@ class MungroadDialog {
     );
   };
 
-  static Function(Widget child, List<String> values) openDialogRadio =
-      (Widget child, List<String> values) {
+  static Function(List<String> values, Function(String value) onSubmit,
+          String defaultValue) openDialogRadio =
+      (List<String> values, Function(String value) onSubmit,
+          String defaultValue) {
     showCustomDialog(DialogRadio(
-      child: child,
       values: values,
+      onSubmit: onSubmit,
+      defaultValue: defaultValue,
     ));
   };
 }

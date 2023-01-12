@@ -27,13 +27,13 @@ class LayoutDefaultState extends ConsumerState<LayoutDefault> {
     },
     {
       'widget': const AccommodationIndex(),
-      'title': 'home2',
+      'title': '숙박업소',
       'useBackButton': false,
       'useFloatingButton': false,
     },
     {
       'widget': const RestaurantIndex(),
-      'title': 'home3',
+      'title': '음식점',
       'useBackButton': false,
       'useFloatingButton': false,
     },

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pet_app/classes/mungroad_product.dart';
-import 'package:pet_app/constant.dart';
 import 'package:pet_app/styles.dart';
 import 'package:pet_app/util/mungroad_scroll_controller.dart';
-import 'package:pet_app/util/mungroad_tools.dart';
 import 'package:pet_app/views/accommodation/detail.dart';
 import 'package:pet_app/views/restaurant/detail.dart';
 
@@ -38,6 +36,12 @@ class ListProductState extends ConsumerState<ListProduct> {
 
     _listScrollController.setOptions(widget.options);
     getList(true);
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override

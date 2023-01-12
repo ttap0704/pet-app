@@ -4,6 +4,7 @@ import 'package:pet_app/styles.dart';
 import 'package:pet_app/store/common.dart';
 import 'package:pet_app/classes/mungroad_colors.dart';
 import 'package:pet_app/util/mungroad_dialog.dart';
+import 'package:pet_app/util/mungroad_radio_contents.dart';
 
 class CustomAppBar extends ConsumerStatefulWidget with PreferredSizeWidget {
   const CustomAppBar({
@@ -23,6 +24,16 @@ class CustomAppBar extends ConsumerStatefulWidget with PreferredSizeWidget {
 }
 
 class CustomAppBarState extends ConsumerState<CustomAppBar> {
+  void onSubmitRadioDialog(String value) {
+    final commonWatch = ref.watch(commonProvider);
+    final commonRead = ref.read(commonProvider.notifier);
+    if (commonWatch.tabNumber == 1) {
+      commonRead.setLocation('accommodation', value);
+    } else {
+      commonRead.setLocation('restaurant', value);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final commonWatch = ref.watch(commonProvider);
@@ -47,13 +58,19 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
     );
 
     if (useDialog) {
+      String defalutValue = commonWatch.tabNumber == 1
+          ? commonWatch.accommodationLocation
+          : commonWatch.restaurantLocation;
       titleWidget = GestureDetector(
         onTap: () {
-          MungroadDialog.openDialogRadio(Text('hihi'),
-              ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7']);
+          MungroadDialog.openDialogRadio(
+            MungroadRadioContents.location,
+            onSubmitRadioDialog,
+            defalutValue,
+          );
         },
         child: Text(
-          'dialog',
+          '${widget.title} ($defalutValue)',
           style: titleStyle,
         ),
       );
